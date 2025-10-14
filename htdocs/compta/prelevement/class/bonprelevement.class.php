@@ -223,7 +223,6 @@ class BonPrelevement extends CommonObject
 		'fk_user_credit' => array('type' => 'integer:User:user/class/user.class.php', 'label' => 'Fkusercredit', 'enabled' => 1, 'position' => 70, 'notnull' => 0, 'visible' => -1, 'css' => 'maxwidth500 widthcentpercentminusxx', 'csslist' => 'tdoverflowmax150',),
 		'type' => array('type' => 'varchar(16)', 'label' => 'Type', 'enabled' => 1, 'position' => 75, 'notnull' => 0, 'visible' => -1,),
 		'fk_bank_account' => array('type' => 'integer', 'label' => 'Fkbankaccount', 'enabled' => 1, 'position' => 80, 'notnull' => 0, 'visible' => -1, 'css' => 'maxwidth500 widthcentpercentminusxx',),
-		'fk_rib' => array('type' => 'integer', 'label' => 'LinkedBankRib', 'enabled' => 1, 'position' => 600, 'notnull' => 0, 'visible' => -1,), // InfraS add
 	);
 	/**
 	 * @var int
@@ -293,7 +292,6 @@ class BonPrelevement extends CommonObject
 	/**
 	 * @var int
 	 */
-	public $fk_rib; // InfraS add
 	// END MODULEBUILDER PROPERTIES
 
 
@@ -516,7 +514,6 @@ class BonPrelevement extends CommonObject
 		$sql .= ", p.type";
 		$sql .= ", p.fk_bank_account";
 		$sql .= ", p.statut as status";
-		$sql .= ", p.fk_rib"; // InfraS add
 		$sql .= " FROM " . MAIN_DB_PREFIX . "prelevement_bons as p";
 		$sql .= " WHERE p.entity IN (" . getEntity('invoice') . ")";
 		if ($rowid > 0) {
@@ -546,7 +543,6 @@ class BonPrelevement extends CommonObject
 
 				$this->type = $obj->type;
 				$this->fk_bank_account = $obj->fk_bank_account;
-				$this->fk_rib = $obj->fk_rib; // InfraS add
 				
 				$this->status = $obj->status;
 				if (empty($this->status)) {		// Value is sometimes null in database
