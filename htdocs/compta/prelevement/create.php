@@ -93,7 +93,7 @@ $search_remove_btn 					= GETPOST('button_removefilter', 'alpha');
 $sortfield 							= GETPOST('sortfield', 'aZ09comma');
 $sortorder 							= GETPOST('sortorder', 'aZ09comma');
 
-$option = GETPOST('search_option'); 
+$option = GETPOST('search_option');
 $filter = GETPOST('filtre', 'alpha');
 // InfraS add end
 $limit = GETPOSTINT('limit') ? GETPOSTINT('limit') : $conf->liste_limit;
@@ -129,17 +129,14 @@ if ($sourcetype != 'salary') {
 	if ($type == 'bank-transfer') {
 		$arrayfields['f.ref_supplier'] = array('label'=>'RefSupplier', 'checked'=>1);
 	}
-
 } else {
 	if (!$sortfield) {
 		$sortfield = "s.rowid"; 
 	}
-
 	$fieldstosearchall = array(
 		's.rowid' => 'RefSalary',
 		's.nom' => "Employee",
 	);
-	
 	$arrayfields = array(
 		's.rowid'=>array('label'=>"RefSalary", 'checked'=>1),
 		's.nom'=>array('label'=>"Employee", 'checked'=>1),
@@ -262,7 +259,7 @@ if (empty($reshook)) {
 			// getDolGlobalString('PRELEVEMENT_CODE_BANQUE') and getDolGlobalString('PRELEVEMENT_CODE_GUICHET') should be empty (we don't use them anymore)
 			// InfraS add begin
 			$selected_invoices = array();
-			foreach($toselect as $select) {
+			foreach ($toselect as $select) {
 				$selected_invoices[] = (int) $select;
 			}
 			// InfraS add end
@@ -645,9 +642,7 @@ if ($sourcetype != 'salary') {
 	}
 
 }
-
 $sql .= !empty($searchsql) ? $searchsql : '';
-
 if (!$search_all) {
     if ($sourcetype != 'salary') {
         $sql .= " GROUP BY f.rowid, f.ref, f.date_lim_reglement, s.rowid, s.nom";
@@ -655,10 +650,9 @@ if (!$search_all) {
         $sql .= " GROUP BY s.rowid, s.ref, s.amount, u.rowid, u.lastname, u.firstname";
     }
 } else {
-    $searchsql .= natural_search(array_keys($fieldstosearchall), $search_all);
-    $sql .= $searchsql;
+	$searchsql .= natural_search(array_keys($fieldstosearchall), $search_all);
+	$sql .= $searchsql;
 }
-
 $sql .= $db->order($sortfield, $sortorder);
 // InfraS add end
 
