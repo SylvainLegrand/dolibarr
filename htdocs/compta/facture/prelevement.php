@@ -117,7 +117,7 @@ if ($reshook < 0) {
 
 if (empty($reshook)) {
 	if ($action == "new" && $usercancreate) {
-		if (price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) > 0 && price2num(GETPOST('withdraw_request_amount', 'alpha')) <= price2num(GETPOST('remaintopaylesspendingdebit', 'alpha'))) { // Infras add
+		if (price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) > 0 && price2num(GETPOST('withdraw_request_amount', 'alpha')) <= price2num(GETPOST('remaintopaylesspendingdebit', 'alpha'))) {
 			if ($object->id > 0) {
 				$db->begin();
 	
@@ -131,7 +131,7 @@ if (empty($reshook)) {
 	
 				// Get chosen iban id
 				$iban = GETPOSTINT('accountcustomerid');
-				// InfraS change begin 
+
 				if($iban < 0){
 					setEventMessages($langs->trans("CustomerAccountNotSelected"), null, 'errors');
 				} else {
@@ -146,16 +146,14 @@ if (empty($reshook)) {
 						$db->rollback();
 						setEventMessages($object->error, $object->errors, 'errors');
 					}
-				// InfraS change end
 				}
 			}
 			$action = '';
-		} // InfraS add begin
+		}
 		else {
 			setEventMessages($langs->trans('unprocessedRequest').' '.(price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) <= 0 ? $langs->trans('paymentsCoveringEntireInvoice') :  $langs->trans('requestedAmountExceedsOutstanding', price2num(GETPOST('withdraw_request_amount', 'alpha')), price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')))), null, 'errors');
 		}
-		$action = '';
-		// InfraS add end																																														 
+		$action = '';																																														 
 	}
 
 	if ($action == "delete" && $usercancreate) {
@@ -828,7 +826,7 @@ if ($object->id > 0) {
 				print '<input type="hidden" name="id" value="'.$object->id.'" />';
 				print '<input type="hidden" name="type" value="'.$type.'" />';
 				print '<input type="hidden" name="action" value="new" />';
-				print '<input type="hidden" name="remaintopaylesspendingdebit" value="'.$remaintopaylesspendingdebit.'" />';	// InfraS add
+				print '<input type="hidden" name="remaintopaylesspendingdebit" value="'.$remaintopaylesspendingdebit.'" />';
 
 				print '<div class="center formconsumeproduce">';
 
@@ -857,7 +855,7 @@ if ($object->id > 0) {
 					print img_warning($langs->trans("NoDefaultIBANFound"));
 				}
 
-				$form->selectRib(!empty($selectedRib) ? $selectedRib : (!empty($defaultRibId) ? $defaultRibId : ''), 'accountcustomerid', 'fk_soc='.$object->socid, 1, '', 1); // InfraS change
+				$form->selectRib(!empty($selectedRib) ? $selectedRib : (!empty($defaultRibId) ? $defaultRibId : ''), 'accountcustomerid', 'fk_soc='.$object->socid, 1, '', 1);
 				// Bank Transfer Amount
 				print ' &nbsp; &nbsp; <label for="withdraw_request_amount">';
 				if ($type == 'bank-transfer') {
