@@ -623,7 +623,7 @@ if ($sourcetype != 'salary') {
 	}
 	if ($search_amount) {
 		$search_amount = trim($search_amount);
-		// Vérifier si l’utilisateur a mis un signe de comparaison
+		// Check if the user entered a comparison sign
 		if (preg_match('/^(<=|>=|=|<|>){0,1}\s*([\d\.]+)$/', $search_amount, $matches)) {
 			$operator = $matches[1] ?: '='; // si pas d’opérateur, on met '='
 			$value = (float) $matches[2];
@@ -907,7 +907,7 @@ if ($resql) {
 			print_liste_field_titre($langs->trans("RefSupplier"), $_SERVER['PHP_SELF'], 'f.ref_supplier,f.rowid', '', $param, '', $sortfield, $sortorder);
 		}
 	}
-	// Date limite
+	// Due date
 	if (!empty($arrayfields['f.date_lim_reglement']['checked'])) {
 		print_liste_field_titre($arrayfields['f.date_lim_reglement']['label'], $_SERVER['PHP_SELF'], 'f.date_lim_reglement', '', $param, '', $sortfield, $sortorder, 'center ');
 	}
