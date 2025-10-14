@@ -4263,7 +4263,7 @@ if ($action == 'create') {
 					$htmltooltip = '';
 					$params = (empty($conf->use_javascript_ajax) ? array() : array('attr' => array('class' => 'reposition')));
 					//var_dump($isErasable); var_dump($params);
-					if (preg_match('/^-5(\d+)/',$isErasable, $reg)) {
+					if (preg_match('/^-5(\d+)/', $isErasable, $reg)) {
 						$tmprefbon = '';
 						if ((int) $reg[1] > 0) {
 							require_once DOL_DOCUMENT_ROOT.'/compta/prelevement/class/bonprelevement.class.php';
