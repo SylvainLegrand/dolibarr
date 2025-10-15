@@ -6733,8 +6733,7 @@ if ($action == 'create') {
 			// Delete
 			$isErasable = $object->is_erasable();
 			$htmltooltip = '';
-			// InfraS add begin
-			if (preg_match('/^-5(\d+)/',$isErasable, $reg)) {
+			if (preg_match('/^-5(\d+)/', $isErasable, $reg)) {
 				$tmprefbon = '';
 				if ((int) $reg[1] > 0) {
 					require_once DOL_DOCUMENT_ROOT.'/compta/prelevement/class/bonprelevement.class.php';
@@ -6744,8 +6743,7 @@ if ($action == 'create') {
 					$enableDelete = -1;
 				}
 				$htmltooltip = $langs->trans("DisabledBecauseInvoiceHasPrelevement", $tmprefbon);
-				// InfraS add end
-			}  elseif ($isErasable == -4) {	// InfraS change
+			} elseif ($isErasable == -4) {
 				$htmltooltip = $langs->trans('DisabledBecausePayments');
 			} elseif ($isErasable == -3) {
 				$htmltooltip = $langs->trans('DisabledBecauseNotLastSituationInvoice');
