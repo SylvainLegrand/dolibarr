@@ -120,7 +120,6 @@ if (empty($reshook)) {
 		if (price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) > 0 && price2num(GETPOST('withdraw_request_amount', 'alpha')) <= price2num(GETPOST('remaintopaylesspendingdebit', 'alpha'))) {
 			if ($object->id > 0) {
 				$db->begin();
-	
 				$newtype = $type;
 				$sourcetype = 'facture';
 				if ($type == 'bank-transfer') {
@@ -128,11 +127,10 @@ if (empty($reshook)) {
 					$newtype = 'bank-transfer';
 				}
 				$paymentservice = GETPOST('paymentservice');
-	
 				// Get chosen iban id
 				$iban = GETPOSTINT('accountcustomerid');
 
-				if($iban < 0){
+				if ($iban < 0) {
 					setEventMessages($langs->trans("CustomerAccountNotSelected"), null, 'errors');
 				} else {
 					$amount = GETPOST('withdraw_request_amount', 'alpha');
