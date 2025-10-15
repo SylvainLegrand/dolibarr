@@ -146,11 +146,10 @@ if (empty($reshook)) {
 					}
 				}
 			}
-			$action = '';
 		} else {
 			setEventMessages($langs->trans('unprocessedRequest').' '.(price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) <= 0 ? $langs->trans('paymentsCoveringEntireInvoice') :  $langs->trans('requestedAmountExceedsOutstanding', price2num(GETPOST('withdraw_request_amount', 'alpha')), price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')))), null, 'errors');
 		}
-		$action = '';																																					 
+		$action = '';
 	}
 
 	if ($action == "delete" && $usercancreate) {
