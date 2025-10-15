@@ -129,7 +129,7 @@ if ($sourcetype != 'salary') {
 	}
 } else {
 	if (!$sortfield) {
-		$sortfield = "s.rowid"; 
+		$sortfield = "s.rowid";
 	}
 	$fieldstosearchall = array(
 		's.rowid' => 'RefSalary',
@@ -236,7 +236,7 @@ if (empty($reshook)) {
 			$action = '';
 			$error++;
 		}
-		if ($sourcetype != 'salary'){
+		if ($sourcetype != 'salary') {
 			if (empty($toselect)) {
 				$mesg = $langs->trans("NoInvoiceSelected");
 				setEventMessages($mesg, null, 'errors');
@@ -604,8 +604,8 @@ if ($sourcetype != 'salary') {
 	}
 } else {
 	if ($search_ref) {
-        $searchsql .= natural_search('s.rowid', $search_ref);
-    }
+		$searchsql .= natural_search('s.rowid', $search_ref);
+	}
 	if ($search_employee) {
 		$searchsql .= natural_search(array('u.lastname', 'u.firstname'), $search_employee);
 	}
@@ -628,14 +628,13 @@ if ($sourcetype != 'salary') {
 	if ($search_date_demande_end) {
 		$searchsql .= " AND pd.date_demande <= '" . $db->idate($search_date_demande_end) . "'";
 	}
-
 }
 $sql .= !empty($searchsql) ? $searchsql : '';
 if (!$search_all) {
-    if ($sourcetype != 'salary') {
-        $sql .= " GROUP BY f.rowid, f.ref, f.date_lim_reglement, s.rowid, s.nom";
-    } else {
-        $sql .= " GROUP BY s.rowid, s.ref, s.amount, u.rowid, u.lastname, u.firstname";
+	if ($sourcetype != 'salary') {
+		$sql .= " GROUP BY f.rowid, f.ref, f.date_lim_reglement, s.rowid, s.nom";
+	} else {
+		$sql .= " GROUP BY s.rowid, s.ref, s.amount, u.rowid, u.lastname, u.firstname";
     }
 } else {
 	$searchsql .= natural_search(array_keys($fieldstosearchall), $search_all);
