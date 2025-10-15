@@ -340,15 +340,15 @@ class BonPrelevement extends CommonObject
 	 * @param	string	$code_guichet 	code of bank's office
 	 * @param	string	$number bank 	account number
 	 * @param	string	$number_key 	number key of account number
+	 * @param	int		$fk_rib			ID of the IBAN to use (can belong to a company or a user)
 	 * @param	string	$type			'debit-order' or 'bank-transfer'
 	 * @param   string  $sourcetype     'salary' for salary, '' for invoices
 	 * @param	string	$bic			BIC used
 	 * @param	string	$iban			IBAN used
 	 * @param	string	$rum			RUM
-	 * @param	int		$fk_rib			ID of the IBAN to use (can belong to a company or a user)
 	 * @return	int						>0 if OK, <0 if KO
 	 */
-	public function AddFacture($invoice_id, $client_id, $client_nom, $amount, $code_banque, $code_guichet, $number, $number_key, $type = 'debit-order', $sourcetype = '', $bic = '', $iban = '', $rum = '', $fk_rib)
+	public function AddFacture($invoice_id, $client_id, $client_nom, $amount, $code_banque, $code_guichet, $number, $number_key, $fk_rib, $type = 'debit-order', $sourcetype = '', $bic = '', $iban = '', $rum = '')
 	{
 		// phpcs:enable
 		$result = 0;
@@ -406,14 +406,14 @@ class BonPrelevement extends CommonObject
 	 *	@param	string	$code_guichet 	code of bank's office (Deprecated, not used)
 	 *	@param	string	$number 		bank account number (Deprecated, not used)
 	 *	@param  string	$number_key 	number key of account number (Deprecated, not used)
+	 *  @param	int		$fk_rib		    ID of the IBAN to use (can belong to a company or a user)
 	 *  @param  string  $sourcetype     'salary' for salary, '' for invoices
 	 *  @param	string	$bic			BIC used
 	 *  @param	string	$iban			IBAN used
 	 *  @param	string	$rum			RUM used
-	 *  @param	int		$fk_rib		    ID of the IBAN to use (can belong to a company or a user)
 	 *	@return	int						>0 if OK, <0 if KO
 	 */
-	public function addline(&$line_id, $client_id, $client_nom, $amount, $code_banque, $code_guichet, $number, $number_key, $sourcetype = '', $bic = '', $iban = '', $rum = '', , $fk_rib)
+	public function addline(&$line_id, $client_id, $client_nom, $amount, $code_banque, $code_guichet, $number, $number_key, $fk_rib, $sourcetype = '', $bic = '', $iban = '', $rum = '')
 	{
 		$result = -1;
 		$concat = getDolGlobalInt('MAIN_MODULE_PRELEVEMENT_CONCAT');	// ??? what is this for. Seems not used.
@@ -1110,6 +1110,7 @@ class BonPrelevement extends CommonObject
 			$fk_bank_account = ($type == 'bank-transfer' ? getDolGlobalInt('PAYMENTBYBANKTRANSFER_ID_BANKACCOUNT') : getDolGlobalInt('PRELEVEMENT_ID_BANKACCOUNT'));
 		}
 		
+		// Convert $dids to an array
 		if (is_int($dids)) {
 			$dids = array($dids);
 		}
@@ -1469,12 +1470,12 @@ class BonPrelevement extends CommonObject
 							$fac[4],
 							$fac[5],
 							$fac[6],
+							$fac[15],
 							$type,
 							$sourcetype,
 							$fac[10],
 							$fac[11],
-							$fac[14],
-							$fac[15]
+							$fac[14]
 						);
 
 						if ($ri != 0) {
@@ -2063,7 +2064,7 @@ class BonPrelevement extends CommonObject
 						$sql .= " AND rib.rowid = " . ((int) $thirdpartyBANId);
 					} else {
 						$sql .= " AND ((pl.fk_rib IS NOT NULL AND rib.rowid = pl.fk_rib) OR (pl.fk_rib IS NULL AND rib.default_rib = 1))";
-					} 
+					}
 					$sql .= " AND rib.type = 'ban'";
 				}
 				// Define $fileCrediteurSection. One section DrctDbtTxInf per invoice.
