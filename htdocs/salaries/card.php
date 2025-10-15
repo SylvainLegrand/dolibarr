@@ -1208,7 +1208,7 @@ if ($id > 0) {
 			print dolGetButtonAction('', $langs->trans('ToClone'), 'default', $_SERVER["PHP_SELF"].'?action=clone&token='.newToken().'&id='.$object->id, '');
 		}
 
-		$isErasable 		= 0; 
+		$isErasable 		= 0;
 		$htmltooltip 		= '';
 		$sqlprelevement 	= "SELECT fk_prelevement_bons, traite";
 		$sqlprelevement 	.= " FROM ".$db->prefix(). "prelevement_demande";
@@ -1223,7 +1223,7 @@ if ($id > 0) {
 				$isErasable = (int) (-5 . $objprelevement->fk_prelevement_bons);
 			}
 		}
-		if ($permissiontodelete && preg_match('/^-5(\d+)/',$isErasable, $reg)) {
+		if ($permissiontodelete && preg_match('/^-5(\d+)/', $isErasable, $reg)) {
 			$tmprefbon = '';
 			if ((int) $reg[1] > 0) {
 				require_once DOL_DOCUMENT_ROOT.'/compta/prelevement/class/bonprelevement.class.php';
