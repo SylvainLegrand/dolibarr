@@ -635,7 +635,7 @@ if (!$search_all) {
 		$sql .= " GROUP BY f.rowid, f.ref, f.date_lim_reglement, s.rowid, s.nom";
 	} else {
 		$sql .= " GROUP BY s.rowid, s.ref, s.amount, u.rowid, u.lastname, u.firstname";
-    }
+	}
 } else {
 	$searchsql .= natural_search(array_keys($fieldstosearchall), $search_all);
 	$sql .= $searchsql;
@@ -758,7 +758,7 @@ if ($resql) {
 			$picto = 'salary';
 		}
 	}
-	print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $param, '', '', $massactionbutton, $num, $nbtotalofrecords, $picto, 0, '', '', $limit, 0, 0, 1); // InfraS change 
+	print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $param, '', '', $massactionbutton, $num, $nbtotalofrecords, $picto, 0, '', '', $limit, 0, 0, 1);
 
 	$tradinvoice = "Invoice";
 	if ($type == 'bank-transfer') {
@@ -798,7 +798,7 @@ if ($resql) {
 		print '<td class="liste_titre left">';
 		print '<input class="flat maxwidth50" type="text" name="search_ref" value="'.$search_ref.'">';
 		print '</td>';
-	} 
+	}
 	// Ref suppllier
 	if ($sourcetype != 'salary' && !empty($arrayfields['f.ref_supplier']['checked'])) {
 		print '<td class="liste_titre left">';
@@ -838,7 +838,7 @@ if ($resql) {
 	if ($sourcetype != 'salary') {
 		if (!empty($arrayfields['pd.amount']['checked'])) {
 			print '<td class="liste_titre">&nbsp;</td>';
-		} 
+		}
 	} else {
 		if (!empty($arrayfields['pd.amount']['checked'])) {
 			print '<td class="liste_titre"><input class="flat maxwidth50" type="text" name="search_amount" value="'.$search_amount.'"></td>';
@@ -1046,13 +1046,13 @@ if ($resql) {
 					print '<td class="tdoverflowmax200">'.$bankaccountstatic->getNomUrl(1, '', 'reflabel');
 					print '<input type="hidden" name="account_searched" value="'.$obj->fk_account.'">';
 					print "</td>\n";
+				} else {
+					print '<td class="tdoverflowmax200">&nbsp;</td>'."\n";
 				}
-				else	print '<td class="tdoverflowmax200">&nbsp;</td>'."\n";
 				if (!$i) {
 					$totalarray['nbfield']++;
 				}
 			}
-			
 			// RIB
 			if (!empty($arrayfields['pd.fk_soc_rib']['checked'])) {
 				print '<td>';
@@ -1153,7 +1153,7 @@ if ($resql) {
 			let amount = Number(pd.getAttribute('amount'));
 			total_checked += amount;
 		})
-		let precision = Math.pow(10, <?= getDolGlobalInt('MAIN_MAX_DECIMALS_TOT') ?>);
+		let precision = Math.pow(10, <?php echo getDolGlobalInt('MAIN_MAX_DECIMALS_TOT') ?>);
 		$('#total_checked').val(Math.round(total_checked * precision) / precision);
 	}
 
@@ -1172,7 +1172,7 @@ if ($resql) {
 ?>
 <script>
 function updateToselectHidden() {
-    // Récupère toutes les checkbox cochées
+	// Récupère toutes les checkbox cochées
     let checked_pd = Array.from($('[id^="cb"]').filter(':checked'));
 
     // On récupère le formulaire cible
