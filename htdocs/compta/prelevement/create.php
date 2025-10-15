@@ -971,7 +971,6 @@ if ($resql) {
 				$salary->fetch($obj->rowid);
 			}
 			print '<tr class="oddeven">';
-
 			// Action column
 			if (getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN')) {
 				print '<td class="nowrap center">';
@@ -982,7 +981,6 @@ if ($resql) {
 				print '<input id="cb'.$obj->request_row_id.'" class="flat checkforselect" type="checkbox" name="toselect[]" value="'.$obj->request_row_id.'"'.($selected ? ' checked="checked"' : '').' amount="'.$obj->amount.'">';
 				print '</td>';
 			}
-
 			// Ref invoice
 			$refKey = ($sourcetype != 'salary') ? 'f.ref' : 's.rowid';
 			if (!empty($arrayfields[$refKey]['checked'])) {
@@ -1008,7 +1006,6 @@ if ($resql) {
 					$totalarray['nbfield']++;
 				}
 			}
-
 			// Date limit
 			if (!empty($arrayfields['f.date_lim_reglement']['checked'])) {
 				print '<td class="center nowraponall">'.dol_print_date($datelimit, 'day');
@@ -1020,7 +1017,6 @@ if ($resql) {
 					$totalarray['nbfield']++;
 				}
 			}
-			
 			// Thirdparty
 			if (!empty($arrayfields['s.nom']['checked'])) {
 				if ($sourcetype != 'salary') {
@@ -1038,7 +1034,6 @@ if ($resql) {
 					$totalarray['nbfield']++;
 				}
 			}
-
 			// Bank account
 			if (!empty($arrayfields['f.fk_account']['checked'])) {
 				if (!empty($obj->fk_account)) {
@@ -1074,7 +1069,6 @@ if ($resql) {
 					$totalarray['nbfield']++;
 				}
 			}
-
 			// RUM
 			if (empty($type) || $type == 'direct-debit') {
 				print '<td>';
@@ -1100,7 +1094,6 @@ if ($resql) {
 					$totalarray['nbfield']++;
 				}
 			}
-
 			// Amount
 			if (!empty($arrayfields['pd.amount']['checked'])) {
 				print '<td class="center nowrap"><span id="amount_'.$obj->request_row_id.'" class="amount">'.price($obj->amount)."</span></td>\n";
@@ -1172,31 +1165,37 @@ if ($resql) {
 ?>
 <script>
 function updateToselectHidden() {
-	// Récupère toutes les checkbox cochées
+	// Récupère toutes les checkbox cochées et le formulaire cible
 	let checked_pd = Array.from($('[id^="cb"]').filter(':checked'));
-    // On récupère le formulaire cible
-    let targetForm = document.getElementById('createFilePayment');
-    // Supprime les anciens champs toselect[] s'ils existent
-    targetForm.querySelectorAll('input[name="toselect[]"]').forEach(el => el.remove());
-    // Crée un input hidden pour chaque checkbox cochée
-    checked_pd.forEach(pd => {
-        let hidden = document.createElement('input');
-        hidden.type = 'hidden';
-        hidden.name = 'toselect[]';
-        hidden.value = pd.value;
-        targetForm.appendChild(hidden);
-    });
-    // Optionnel : mettre à jour le total affiché
-    let total_checked = checked_pd.reduce((sum, pd) => sum + Number(pd.getAttribute('amount')), 0);
-    let precision = Math.pow(10, <?= getDolGlobalInt('MAIN_MAX_DECIMALS_TOT') ?>);
-    $('#total_checked').val(Math.round(total_checked * precision) / precision);
-    // console.log('Mise à jour du hidden toselect[]', checked_pd.map(pd => pd.value));
+	let targetForm = document.getElementById('createFilePayment');
+
+	// Supprime les anciens champs toselect[] s'ils existent
+	targetForm.querySelectorAll('input[name="toselect[]"]').forEach(el => el.remove());
+
+	// Crée un input hidden pour chaque checkbox cochée
+	checked_pd.forEach(pd => {
+		let hidden = document.createElement('input');
+		hidden.type = 'hidden';
+		hidden.name = 'toselect[]';
+		hidden.value = pd.value;
+		targetForm.appendChild(hidden);
+	});
+
+	// Met à jour le total affiché
+	let total_checked = checked_pd.reduce((sum, pd) => sum + Number(pd.getAttribute('amount')), 0);
+	let precision = Math.pow(10, <?= getDolGlobalInt('MAIN_MAX_DECIMALS_TOT') ?>);
+	$('#total_checked').val(Math.round(total_checked * precision) / precision);
+
+	// console.log('Mise à jour du hidden toselect[]', checked_pd.map(pd => pd.value));
 }
-// On écoute le changement sur toutes les checkbox
+
+// Écouteur sur toutes les checkbox
 $('[id^="cb"]').change(updateToselectHidden);
-// Calcul initial
+
+// Calcul initial au chargement
 updateToselectHidden();
 </script>
+
 <?php
 
 /*
