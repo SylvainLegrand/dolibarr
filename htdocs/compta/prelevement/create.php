@@ -1173,14 +1173,11 @@ if ($resql) {
 <script>
 function updateToselectHidden() {
 	// Récupère toutes les checkbox cochées
-    let checked_pd = Array.from($('[id^="cb"]').filter(':checked'));
-
+	let checked_pd = Array.from($('[id^="cb"]').filter(':checked'));
     // On récupère le formulaire cible
     let targetForm = document.getElementById('createFilePayment');
-
     // Supprime les anciens champs toselect[] s'ils existent
     targetForm.querySelectorAll('input[name="toselect[]"]').forEach(el => el.remove());
-
     // Crée un input hidden pour chaque checkbox cochée
     checked_pd.forEach(pd => {
         let hidden = document.createElement('input');
@@ -1189,22 +1186,17 @@ function updateToselectHidden() {
         hidden.value = pd.value;
         targetForm.appendChild(hidden);
     });
-
     // Optionnel : mettre à jour le total affiché
     let total_checked = checked_pd.reduce((sum, pd) => sum + Number(pd.getAttribute('amount')), 0);
     let precision = Math.pow(10, <?= getDolGlobalInt('MAIN_MAX_DECIMALS_TOT') ?>);
     $('#total_checked').val(Math.round(total_checked * precision) / precision);
-
     // console.log('Mise à jour du hidden toselect[]', checked_pd.map(pd => pd.value));
 }
-
 // On écoute le changement sur toutes les checkbox
 $('[id^="cb"]').change(updateToselectHidden);
-
 // Calcul initial
 updateToselectHidden();
 </script>
-
 <?php
 
 /*
