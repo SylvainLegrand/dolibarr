@@ -250,7 +250,6 @@ if ($massaction == 'withdrawrequest') {
 		if (!$error && !empty($listofSalries)) {
 			$nbwithdrawrequestok = 0;
 			foreach ($listofSalries as $salary) {
-				// InfraS add begin
 				$pending = 0;
 				// Get pending requests open with no transfer receipt yet
 				$sql = "SELECT SUM(pfd.amount) as amount";
@@ -281,9 +280,9 @@ if ($massaction == 'withdrawrequest') {
 				$db->free($resPending);
 
 				$requestAmount = $salary->resteapayer - $pending;
-				if ($requestAmount > 0) { // InfraS add end
+				if ($requestAmount > 0) {
 					$db->begin();
-					$result = $salary->demande_prelevement($user, $requestAmount, 'salaire'); // InfraS change
+					$result = $salary->demande_prelevement($user, $requestAmount, 'salaire');
 					if ($result > 0) {
 						$db->commit();
 						$nbwithdrawrequestok++;
@@ -291,11 +290,11 @@ if ($massaction == 'withdrawrequest') {
 						$db->rollback();
 						setEventMessages($salary->error, $salary->errors, 'errors');
 					}
-				} else { // InfraS add begin
+				} else {
 					$salary->errors[] = 'WithdrawRequestErrorNilAmount';
 					$salary->errors[] = 'WithdrawRequestErrorAlreadyTransmitted';
 					setEventMessages($salary->label.': ', $salary->errors, 'errors');
-				} // InfraS add end
+				}
 			}
 			if ($nbwithdrawrequestok > 0) {
 				setEventMessages($langs->trans("WithdrawRequestsDone", $nbwithdrawrequestok), null, 'mesgs');
