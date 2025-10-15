@@ -185,12 +185,12 @@ if ($action == "add" && $permissiontoadd) {
 	if (price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) > 0 && price2num(GETPOST('withdraw_request_amount', 'alpha')) <= price2num(GETPOST('remaintopaylesspendingdebit', 'alpha'))) {
 		if ($object->id > 0) {
 			$db->begin();
-			
+
 			$sourcetype = 'salaire';
 			$newtype = 'salaire';
-			
+
 			$paymentservice = GETPOST('paymentservice');	// value can be 'stripesepa'. not used yet.
-			
+
 			$result = $object->demande_prelevement($user, GETPOSTFLOAT('withdraw_request_amount'), $newtype, $sourcetype);
 			if ($result > 0) {
 				$db->commit();
@@ -205,7 +205,7 @@ if ($action == "add" && $permissiontoadd) {
 	} else {
 		setEventMessages($langs->trans('unprocessedRequest').' '.(price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) <= 0 ? $langs->trans('paymentsCoveringEntireSalary') :  $langs->trans('requestedAmountExceedsOutstanding', price2num(GETPOST('withdraw_request_amount', 'alpha')), price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')))), null, 'errors');
 	}
-	$action = '';																																										
+	$action = '';
 }
 
 if ($action == "delete" && $permissiontodelete) {
@@ -530,7 +530,7 @@ if ($object->paye == 0 && $hadRequest == 0) {
 	if ($resteapayer > 0) {
 		if ($user_perms) {
 			$remaintopaylesspendingdebit = $resteapayer - $pending;
-			
+
 			print '<form method="POST" action="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'">';
 			print '<input type="hidden" name="token" value="'.newToken().'" />';
 			print '<input type="hidden" name="id" value="'.$object->id.'" />';
