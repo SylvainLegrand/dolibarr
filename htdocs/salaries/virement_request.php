@@ -182,7 +182,7 @@ if ($action == 'setbankaccount' && $permissiontoadd) {
 
 if ($action == "add" && $permissiontoadd) {
 	//var_dump($object);exit;
-	if (price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) > 0 && price2num(GETPOST('withdraw_request_amount', 'alpha')) <= price2num(GETPOST('remaintopaylesspendingdebit', 'alpha'))) { // InfraS add 
+	if (price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) > 0 && price2num(GETPOST('withdraw_request_amount', 'alpha')) <= price2num(GETPOST('remaintopaylesspendingdebit', 'alpha'))) {
 		if ($object->id > 0) {
 			$db->begin();
 	
@@ -191,7 +191,7 @@ if ($action == "add" && $permissiontoadd) {
 	
 			$paymentservice = GETPOST('paymentservice');	// value can be 'stripesepa'. not used yet.
 	
-			$result = $object->demande_prelevement($user, GETPOSTFLOAT('withdraw_request_amount'), $newtype, $sourcetype); // InfraS change
+			$result = $object->demande_prelevement($user, GETPOSTFLOAT('withdraw_request_amount'), $newtype, $sourcetype);
 	
 			if ($result > 0) {
 				$db->commit();
@@ -204,12 +204,10 @@ if ($action == "add" && $permissiontoadd) {
 			}
 		}
 		$action = '';
-	// InfraS add begin
 	} else { 
 		setEventMessages($langs->trans('unprocessedRequest').' '.(price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) <= 0 ? $langs->trans('paymentsCoveringEntireSalary') :  $langs->trans('requestedAmountExceedsOutstanding', price2num(GETPOST('withdraw_request_amount', 'alpha')), price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')))), null, 'errors');
 	}
-	$action = '';
-	// InfraS add end																																											
+	$action = '';																																										
 }
 
 if ($action == "delete" && $permissiontodelete) {
@@ -480,7 +478,6 @@ print '<div class="clearboth"></div>';
 
 print dol_get_fiche_end();
 
-// InfraS add begin
 $pending = 0;
 // Get pending requests open with no transfer receipt yet
 $sql = "SELECT SUM(pfd.amount) as amount";
@@ -509,7 +506,6 @@ if ($resPending) {
 	}
 }
 $db->free($resPending);
-// InfraS add end
 
 /**button  */
 print '<div class="tabsAction">'."\n";
@@ -535,16 +531,16 @@ $hadRequest = $db->num_rows($resql);
 if ($object->paye == 0 && $hadRequest == 0) {
 	if ($resteapayer > 0) {
 		if ($user_perms) {
-			$remaintopaylesspendingdebit = $resteapayer - $pending; // InfraS add
+			$remaintopaylesspendingdebit = $resteapayer - $pending;
 			
 			print '<form method="POST" action="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'">';
 			print '<input type="hidden" name="token" value="'.newToken().'" />';
 			print '<input type="hidden" name="id" value="'.$object->id.'" />';
 			print '<input type="hidden" name="type" value="'.$type.'" />';
 			print '<input type="hidden" name="action" value="add" />';
-			print '<input type="hidden" name="remaintopaylesspendingdebit" value="'.$remaintopaylesspendingdebit.'" />';	// InfraS add
+			print '<input type="hidden" name="remaintopaylesspendingdebit" value="'.$remaintopaylesspendingdebit.'" />';
 			print '<label for="withdraw_request_amount">'.$langs->trans('BankTransferAmount').' </label>';
-			print '<input type="text" id="withdraw_request_amount" name="withdraw_request_amount" value="'.price($remaintopaylesspendingdebit, 0, $langs, 1, -1, -1).'" size="9" />'; // InfraS change
+			print '<input type="text" id="withdraw_request_amount" name="withdraw_request_amount" value="'.price($remaintopaylesspendingdebit, 0, $langs, 1, -1, -1).'" size="9" />';
 			print '<input type="submit" class="butAction" value="'.$buttonlabel.'" />';
 			print '</form>';
 
@@ -560,7 +556,7 @@ if ($object->paye == 0 && $hadRequest == 0) {
 				print '<input type="hidden" name="action" value="add" />';
 				print '<input type="hidden" name="paymenservice" value="stripesepa" />';
 				print '<label for="withdraw_request_amount">'.$langs->trans('BankTransferAmount').' </label>';
-				print '<input type="text" id="withdraw_request_amount" name="withdraw_request_amount" value="'.price($resteapayer, 0, $langs, 1, -1, -1).'" size="9" />'; // InfraS change
+				print '<input type="text" id="withdraw_request_amount" name="withdraw_request_amount" value="'.price($resteapayer, 0, $langs, 1, -1, -1).'" size="9" />';
 				print '<input type="submit" class="butAction" value="'.$buttonlabel.'" />';
 				print '</form>';
 			}
