@@ -24,7 +24,8 @@ create table llx_prelevement_lignes
   fk_prelevement_bons integer,
   fk_soc              integer NOT NULL,
   fk_user             integer NULL,
-
+  fk_rib              integer DEFAULT NULL,
+	
   statut              smallint DEFAULT 0,
 
   client_nom          varchar(255),
