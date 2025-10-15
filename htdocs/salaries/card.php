@@ -1208,7 +1208,6 @@ if ($id > 0) {
 			print dolGetButtonAction('', $langs->trans('ToClone'), 'default', $_SERVER["PHP_SELF"].'?action=clone&token='.newToken().'&id='.$object->id, '');
 		}
 
-		// InfraS add begin
 		$isErasable 		= 0; 
 		$htmltooltip 		= '';
 		$sqlprelevement 	= "SELECT fk_prelevement_bons, traite";
@@ -1234,8 +1233,7 @@ if ($id > 0) {
 			}
 			$htmltooltip = $langs->trans("DisabledBecauseSalaryHasPrelevement", $tmprefbon);
 			print dolGetButtonAction($htmltooltip, $langs->trans('Delete'), 'default', $_SERVER['PHP_SELF'].'#', '', -1);
-			// InfraS add end
-		} elseif ($permissiontodelete && empty($totalpaid)) { // InfraS change
+		} elseif ($permissiontodelete && empty($totalpaid)) {
 			print dolGetButtonAction('', $langs->trans('Delete'), 'delete', $_SERVER["PHP_SELF"].'?action=delete&token='.newToken().'&id='.$object->id, '');
 		} else {
 			print dolGetButtonAction($langs->trans('DisabledBecausePayments'), $langs->trans('Delete'), 'default', $_SERVER['PHP_SELF'].'#', '', false);
