@@ -1235,7 +1235,7 @@ if ($id > 0) {
 			$htmltooltip = $langs->trans("DisabledBecauseSalaryHasPrelevement", $tmprefbon);
 			print dolGetButtonAction($htmltooltip, $langs->trans('Delete'), 'default', $_SERVER['PHP_SELF'].'#', '', -1);
 			// InfraS add end
-		} else if ($permissiontodelete && empty($totalpaid)) { // InfraS change
+		} elseif ($permissiontodelete && empty($totalpaid)) { // InfraS change
 			print dolGetButtonAction('', $langs->trans('Delete'), 'delete', $_SERVER["PHP_SELF"].'?action=delete&token='.newToken().'&id='.$object->id, '');
 		} else {
 			print dolGetButtonAction($langs->trans('DisabledBecausePayments'), $langs->trans('Delete'), 'default', $_SERVER['PHP_SELF'].'#', '', false);
