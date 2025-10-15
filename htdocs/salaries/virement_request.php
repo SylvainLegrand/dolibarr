@@ -185,17 +185,15 @@ if ($action == "add" && $permissiontoadd) {
 	if (price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) > 0 && price2num(GETPOST('withdraw_request_amount', 'alpha')) <= price2num(GETPOST('remaintopaylesspendingdebit', 'alpha'))) {
 		if ($object->id > 0) {
 			$db->begin();
-	
+			
 			$sourcetype = 'salaire';
 			$newtype = 'salaire';
-	
+			
 			$paymentservice = GETPOST('paymentservice');	// value can be 'stripesepa'. not used yet.
-	
+			
 			$result = $object->demande_prelevement($user, GETPOSTFLOAT('withdraw_request_amount'), $newtype, $sourcetype);
-	
 			if ($result > 0) {
 				$db->commit();
-	
 				setEventMessages($langs->trans("RecordSaved"), null, 'mesgs');
 			} else {
 				dol_print_error($db, $error);
@@ -204,7 +202,7 @@ if ($action == "add" && $permissiontoadd) {
 			}
 		}
 		$action = '';
-	} else { 
+	} else {
 		setEventMessages($langs->trans('unprocessedRequest').' '.(price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')) <= 0 ? $langs->trans('paymentsCoveringEntireSalary') :  $langs->trans('requestedAmountExceedsOutstanding', price2num(GETPOST('withdraw_request_amount', 'alpha')), price2num(GETPOST('remaintopaylesspendingdebit', 'alpha')))), null, 'errors');
 	}
 	$action = '';																																										
