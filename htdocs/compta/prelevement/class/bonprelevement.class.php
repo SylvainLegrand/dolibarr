@@ -542,7 +542,7 @@ class BonPrelevement extends CommonObject
 
 				$this->type = $obj->type;
 				$this->fk_bank_account = $obj->fk_bank_account;
-				
+
 				$this->status = $obj->status;
 				if (empty($this->status)) {		// Value is sometimes null in database
 					$this->status = 0;
@@ -1109,12 +1109,12 @@ class BonPrelevement extends CommonObject
 		if (empty($fk_bank_account)) {
 			$fk_bank_account = ($type == 'bank-transfer' ? getDolGlobalInt('PAYMENTBYBANKTRANSFER_ID_BANKACCOUNT') : getDolGlobalInt('PRELEVEMENT_ID_BANKACCOUNT'));
 		}
-		
+
 		// Convert $dids to an array
 		if (is_int($dids)) {
 			$dids = array($dids);
 		}
-		
+
 		$error = 0;
 		// Pre-store some values into variables to simplify following sql requests
 		if ($sourcetype != 'salary') {
