@@ -63,8 +63,8 @@ $sourcetype = GETPOST('sourcetype', 'aZ09');
 $format = GETPOST('format', 'aZ09');
 $id_bankaccount = GETPOSTINT('id_bankaccount');
 $executiondate = dol_mktime(0, 0, 0, GETPOSTINT('remonth'), GETPOSTINT('reday'), GETPOSTINT('reyear'));
-// InfraS add begin
 $searchsql = GETPOST('searchsql', 'alpha');
+
 $search_all 						= trim((GETPOST('search_all', 'alphanohtml') != '') ?GETPOST('search_all', 'alphanohtml') : GETPOST('sall', 'alphanohtml'));
 $search_ref 						= GETPOST('search_ref', 'alpha');
 $search_ref_supplier 				= GETPOST('search_ref_supplier', 'alpha');
@@ -95,7 +95,6 @@ $sortorder 							= GETPOST('sortorder', 'aZ09comma');
 
 $option = GETPOST('search_option');
 $filter = GETPOST('filtre', 'alpha');
-// InfraS add end
 $limit = GETPOSTINT('limit') ? GETPOSTINT('limit') : $conf->liste_limit;
 $page = GETPOSTISSET('pageplusone') ? (GETPOSTINT('pageplusone') - 1) : GETPOSTINT("page");
 if (empty($page) || $page == -1) {
@@ -103,7 +102,6 @@ if (empty($page) || $page == -1) {
 }     // If $page is not defined, or '' or -1
 $offset = $limit * $page;
 
-// InfraS add begin
 $pageprev = $page - 1;
 $pagenext = $page + 1;
 if ($sourcetype != 'salary') {
@@ -145,7 +143,6 @@ if ($sourcetype != 'salary') {
 		'pd.date_demande'=>array('label'=>"PendingSince", 'checked'=>1)
 	);
 }
-// InfraS add end
 
 $hookmanager->initHooks(array('directdebitcreatecard', 'globalcard'));
 
@@ -168,7 +165,6 @@ if ($type == 'bank-transfer') {
 
 
 $error = 0;
-// $option = ""; InfraS comment
 $mesg = '';
 
 $object = new BonPrelevement($db);
@@ -188,7 +184,6 @@ if ($reshook < 0) {
 }
 
 if (empty($reshook)) {
-	// InfraS add begin
 	include DOL_DOCUMENT_ROOT.'/core/actions_changeselectedfields.inc.php';
 
 	if (GETPOST('button_removefilter_x', 'alpha') || GETPOST('button_removefilter', 'alpha') || GETPOST('button_removefilter.x', 'alpha')) {		// All tests must be present to be compatible with all browsers
@@ -220,7 +215,6 @@ if (empty($reshook)) {
 		$option 							= '';
 		$socid 								= "";
 	}
-	// InfraS add end
 	if ($action == 'create' && $permissiontocreate) {
 		$default_account = ($type == 'bank-transfer' ? 'PAYMENTBYBANKTRANSFER_ID_BANKACCOUNT' : 'PRELEVEMENT_ID_BANKACCOUNT');
 		//var_dump($default_account);var_dump(getDolGlobalString($default_account));var_dump($id_bankaccount);exit;
@@ -242,7 +236,6 @@ if (empty($reshook)) {
 			$action = '';
 			$error++;
 		}
-		// InfraS add begin
 		if ($sourcetype != 'salary'){
 			if (empty($toselect)) {
 				$mesg = $langs->trans("NoInvoiceSelected");
@@ -251,18 +244,15 @@ if (empty($reshook)) {
 				$error++;
 			}
 		}
-		// InfraS add end
 
 		$bprev = new BonPrelevement($db);
 
 		if (!$error) {
 			// getDolGlobalString('PRELEVEMENT_CODE_BANQUE') and getDolGlobalString('PRELEVEMENT_CODE_GUICHET') should be empty (we don't use them anymore)
-			// InfraS add begin
 			$selected_invoices = array();
 			foreach ($toselect as $select) {
 				$selected_invoices[] = (int) $select;
 			}
-			// InfraS add end
 			$result = $bprev->create(getDolGlobalString('PRELEVEMENT_CODE_BANQUE'), getDolGlobalString('PRELEVEMENT_CODE_GUICHET'), $mode, $format, $executiondate, 0, $type, 0, 0, $sourcetype);
 			if ($result < 0) {
 				$mesg = '';
@@ -422,7 +412,7 @@ print dol_get_fiche_end();
 
 print '<div class="tabsAction">'."\n";
 
-print '<form action="'.$_SERVER['PHP_SELF'].'"  id="createFilePayment"  method="POST">'; // InfraS change
+print '<form action="'.$_SERVER['PHP_SELF'].'"  id="createFilePayment"  method="POST">';
 print '<input type="hidden" name="action" value="create">';
 print '<input type="hidden" name="token" value="'.newToken().'">';
 print '<input type="hidden" name="type" value="'.$type.'">';
@@ -457,10 +447,9 @@ if ($nb) {
 		$datere = $executiondate;
 		print $form->selectDate($datere, 're');
 
-		// InfraS add begin - Display total amount of selected direct debit requests
+		// Display total amount of selected direct debit requests
 		print '<span class="hideonsmartphone">'.$langs->trans('Total').' </span>';
 		print '<input id="total_checked" value=0 disabled>';
-		// InfraS add end
 
 		if ($mysoc->isInSEPA()) {
 			$title = $langs->trans("CreateForSepa");
@@ -532,7 +521,7 @@ print '<br>';
  * Invoices waiting for withdraw
  */
 if ($sourcetype != 'salary') {
-	$sql = "SELECT f.ref, f.rowid, f.date_lim_reglement as datelimite, f.total_ttc, s.nom as name, s.rowid as socid,"; // InfraS change
+	$sql = "SELECT f.ref, f.rowid, f.date_lim_reglement as datelimite, f.total_ttc, s.nom as name, s.rowid as socid,";
 	if ($type == 'bank-transfer') {
 		$sql .= " f.ref_supplier,";
 	}
@@ -579,7 +568,6 @@ if ($sourcetype != 'salary') {
 	$sql .= " AND pd.traite = 0";
 }
 
-// InfraS add begin
 $searchsql = '';
 if ($sourcetype != 'salary') {
 	if ($search_ref) {
@@ -654,7 +642,6 @@ if (!$search_all) {
 	$sql .= $searchsql;
 }
 $sql .= $db->order($sortfield, $sortorder);
-// InfraS add end
 
 $nbtotalofrecords = '';
 if (!getDolGlobalInt('MAIN_DISABLE_FULL_SCANLIST')) {
@@ -675,7 +662,6 @@ if ($resql) {
 	$i = 0;
 
 	$param = '';
-	// InfraS add begin
 	if (!empty($contextpage) && $contextpage != $_SERVER["PHP_SELF"]) {
 		$param .= '&contextpage='.urlencode($contextpage);
 	}
@@ -736,7 +722,6 @@ if ($resql) {
 	if ($sourcetype) {
 		$param .= '&sourcetype=' . urlencode((string) $sourcetype);
 	}
-	// InfraS add end 
 	if ($type) {
 		$param .= '&type=' . urlencode((string) $type);
 	}
@@ -753,13 +738,11 @@ if ($resql) {
 	print '<form method="POST" id="searchFormList" action="'.$_SERVER["PHP_SELF"].'">';
 	print '<input type="hidden" name="token" value="'.newToken().'">';
 	print '<input type="hidden" name="page" value="'.$page.'">';
-	// InfraS add begin
 	print '<input type="hidden" name="sortfield" value="'.$sortfield.'">';
 	print '<input type="hidden" name="sortorder" value="'.$sortorder.'">';
 	print '<input type="hidden" name="sourcetype" value="'.$sourcetype.'">';
 	print '<input type="hidden" name="type" value="'.$type.'">';
 	print '<input type="hidden" name="formfilteraction" id="formfilteraction" value="list">';
-	// InfraS add end
 	if (!empty($limit)) {
 		print '<input type="hidden" name="limit" value="'.$limit.'"/>';
 	}
@@ -790,7 +773,6 @@ if ($resql) {
 	print '<div class="div-table-responsive-no-min">';
 	print '<table class="noborder centpercent">';
 	print '<tr class="liste_titre">';
-		// InfraS change begin
 	$varpage = empty($contextpage) ? $_SERVER["PHP_SELF"] : $contextpage;
 	$selectedfields = $form->multiSelectArrayWithCheckbox('selectedfields', $arrayfields, $varpage, getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN', '')); // This also change content of $arrayfields
 	$selectedfields .= $form->showCheckAddButtons('checkforselect', 1);
@@ -886,14 +868,10 @@ if ($resql) {
 	print "</tr>\n";
 
 	print '<tr class="liste_titre">';
-	// Infras change end
 	// Ref invoice or salary
-	// InfraS add begin
 	if (getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN')) {
 		print_liste_field_titre($selectedfields, $_SERVER['PHP_SELF'], '', '', '', '', $sortfield, $sortorder, 'center maxwidthsearch ');
 	}
-	// InfraS add end
-	// InfraS change begin
 	$refKey   = ($sourcetype != 'salary') ? 'f.ref' : 's.rowid';
 	$rowidKey = ($sourcetype != 'salary') ? 'f.rowid' : 's.rowid';
 	if (!empty($arrayfields[$refKey]['checked'])) {
@@ -945,16 +923,12 @@ if ($resql) {
 	if (!empty($arrayfields['pd.date_demande']['checked'])) {
 		print_liste_field_titre($langs->trans("PendingSince"), $_SERVER['PHP_SELF'], 'pd.date_demande', '', $param, '', $sortfield, $sortorder, 'center');
 	}
-	// InfraS change end
-	// InfraS add begin
 	if (!getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN')) {
 		print_liste_field_titre($selectedfields, $_SERVER['PHP_SELF'], '', '', '', '', $sortfield, $sortorder, 'center maxwidthsearch ');
 	}
-	// InfraS add end
 	print '</tr>';
 
 	if ($num) {
-		// InfraS add begin
 		// Initialiser totalarray si pas déjà fait
 		if (!isset($totalarray['nbfield'])) {
 			$totalarray['nbfield'] = 0;
@@ -968,7 +942,6 @@ if ($resql) {
 		if (!isset($totalarray['val']['pd.amount'])) {
 			$totalarray['val']['pd.amount'] = 0;
 		}
-		// InfraS add end
 		if ($sourcetype != 'salary') {
 			require_once DOL_DOCUMENT_ROOT.'/societe/class/companybankaccount.class.php';
 		} else {
@@ -979,13 +952,11 @@ if ($resql) {
 		while ($i < $num && $i < $limit) {
 			$obj = $db->fetch_object($resql);
 			if ($sourcetype != 'salary') {
-				$bankaccountstatic = new Account($db); // InfraS add
+				$bankaccountstatic = new Account($db);
 				$bac = new CompanyBankAccount($db);	// Must include the new in loop so the fetch is clean
 				$bac->fetch($obj->soc_rib_id ?? 0, '', $obj->socid);
-				// InfraS add begin
 				$datelimit = $db->jdate($obj->datelimite);
 				$invoicestatic->fetch($obj->rowid);
-				// InfraS add end
 
 				$invoicestatic->id = $obj->rowid;
 				$invoicestatic->ref = $obj->ref;
@@ -1002,7 +973,6 @@ if ($resql) {
 			}
 			print '<tr class="oddeven">';
 
-			// InfraS change begin
 			// Action column
 			if (getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN')) {
 				print '<td class="nowrap center">';
@@ -1160,12 +1130,11 @@ if ($resql) {
 				print '<input id="cb'.$obj->request_row_id.'" class="flat checkforselect" type="checkbox" name="toselect[]" value="'.$obj->request_row_id.'"'.($selected ? ' checked="checked"' : '').' amount="'.$obj->amount.'">';
 				print '</td>';
 			}
-			// InfraS change end
 			print '</tr>';
 			$i++;
 		}
 	} else {
-		$colspan = 8; // InfraS change
+		$colspan = 8;
 		if ($type == 'bank-transfer') {
 			$colspan++;
 		}
@@ -1175,7 +1144,6 @@ if ($resql) {
 		print '<tr class="oddeven"><td colspan="'.$colspan.'"><span class="opacitymedium">'.$langs->trans("None").'</span></td></tr>';
 	}
 	print "</table>";
-	// InfraS add begin
 	?>
 	<script>
 	function computeTotalChecked() {
@@ -1195,7 +1163,6 @@ if ($resql) {
 
 	</script>
 	<?php
-	// InfraS add end
 	print "</div>";
 
 	print "</form>";
@@ -1203,7 +1170,6 @@ if ($resql) {
 } else {
 	dol_print_error($db);
 }
-// InfraS add begin
 ?>
 <script>
 function updateToselectHidden() {
@@ -1241,7 +1207,6 @@ updateToselectHidden();
 </script>
 
 <?php
-// InfraS add end
 
 /*
  * List of latest withdraws
