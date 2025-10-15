@@ -65,7 +65,7 @@ class LignePrelevement
 	 * @var int ID of rib
 	 */
 	public $fk_rib;
-	
+
 	/**
 	 * @var DoliDB Database handler.
 	 */
