@@ -61,12 +61,10 @@ class LignePrelevement
 	 */
 	public $bon_rowid;
 
-	// InfraS add begin
 	/**
 	 * @var int ID of rib
 	 */
 	public $fk_rib;
-	// InfraS add end
 	
 	/**
 	 * @var DoliDB Database handler.
@@ -132,7 +130,7 @@ class LignePrelevement
 				$this->statut          = $obj->statut;
 				$this->bon_ref         = $obj->ref;
 				$this->bon_rowid       = $obj->bon_rowid;
-				$this->fk_rib          = $obj->fk_rib; // InfraS add 
+				$this->fk_rib          = $obj->fk_rib;
 			} else {
 				$error++;
 				dol_syslog("LignePrelevement::Fetch rowid=$rowid numrows=0");
