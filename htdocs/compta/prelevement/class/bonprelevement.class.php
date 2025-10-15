@@ -355,7 +355,7 @@ class BonPrelevement extends CommonObject
 		$line_id = 0;
 
 		// Add lines into prelevement_lignes for tracking. The ID of line inserted is returned into $line_id.
-		$result = $this->addline($line_id, $client_id, $client_nom, $amount, $code_banque, $code_guichet, $number, $number_key, $sourcetype, $bic, $iban, $rum, $fk_rib);
+		$result = $this->addline($line_id, $client_id, $client_nom, $amount, $code_banque, $code_guichet, $number, $number_key, $fk_rib, $sourcetype, $bic, $iban, $rum);
 
 		if ($result == 0) {
 			if ($line_id > 0) {
