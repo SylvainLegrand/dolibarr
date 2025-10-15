@@ -24,7 +24,7 @@ create table llx_prelevement_lignes
   fk_prelevement_bons integer,
   fk_soc              integer NOT NULL,
   fk_user             integer NULL,
-  fk_rib              integer DEFAULT NULL,
+  fk_rib              integer DEFAULT NULL, -- Added to store the rib id
 	
   statut              smallint DEFAULT 0,
 
