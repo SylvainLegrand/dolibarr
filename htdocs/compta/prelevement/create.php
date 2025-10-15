@@ -1183,7 +1183,7 @@ function updateToselectHidden() {
 
 	// Met à jour le total affiché
 	let total_checked = checked_pd.reduce((sum, pd) => sum + Number(pd.getAttribute('amount')), 0);
-	let precision = Math.pow(10, <?= getDolGlobalInt('MAIN_MAX_DECIMALS_TOT') ?>);
+	let precision = Math.pow(10, <?php echo getDolGlobalInt('MAIN_MAX_DECIMALS_TOT') ?>);
 	$('#total_checked').val(Math.round(total_checked * precision) / precision);
 
 	// console.log('Mise à jour du hidden toselect[]', checked_pd.map(pd => pd.value));
