@@ -755,7 +755,6 @@ abstract class CommonInvoice extends CommonObject
 		if (!getDolGlobalString('INVOICE_CAN_ALWAYS_BE_REMOVED') && $this->getSommePaiement() > 0) {
 			return -4;
 		}
-		// InfraS add begin
 		// test if there is a prelevement demand for this invoice and if it is refuse to delete.
 		if ($this instanceof FactureFournisseur) {
 			$hasprelevement = $this->hasPrelevementDemande();
@@ -763,11 +762,9 @@ abstract class CommonInvoice extends CommonObject
 				return $hasprelevement;
 			}
 		}
-		// InfraS add end
 		return 2;
 	}
 
-	// InfraS add begin
 	/**
 	 *	Return if an invoice has a prelevement demand
 	 *
@@ -792,7 +789,6 @@ abstract class CommonInvoice extends CommonObject
 		}
 		return 0;
 	}
-	// InfraS add end
 
 	/**
 	 *	Return if an invoice was transferred into accountnancy.
