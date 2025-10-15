@@ -112,7 +112,7 @@ class LignePrelevement
 		$error = 0;
 
 		$sql = "SELECT pl.rowid, pl.amount, p.ref, p.rowid as bon_rowid";
-		$sql .= ", pl.statut, pl.fk_soc, pl.fk_rib"; // InfraS change
+		$sql .= ", pl.statut, pl.fk_soc, pl.fk_rib";
 		$sql .= " FROM ".MAIN_DB_PREFIX."prelevement_lignes as pl";
 		$sql .= ", ".MAIN_DB_PREFIX."prelevement_bons as p";
 		$sql .= " WHERE pl.rowid=".((int) $rowid);
