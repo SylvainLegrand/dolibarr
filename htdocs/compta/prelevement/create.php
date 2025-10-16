@@ -929,9 +929,7 @@ if ($resql) {
 
 	if ($num) {
 		// Initialiser totalarray si pas déjà fait
-		if (!isset($totalarray)) {
-			$totalarray = array();
-		}
+		$totalarray = array();
 		if (!isset($totalarray['nbfield'])) {
 			$totalarray['nbfield'] = 0;
 		}
