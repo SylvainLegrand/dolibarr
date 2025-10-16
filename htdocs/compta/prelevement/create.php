@@ -1029,7 +1029,7 @@ if ($resql) {
 				} else {
 					print '<td class="tdoverflowmax100">';
 					$user->fetch($obj->uid);
-					print $user->getNomUrl(withpictoimg: -1);
+					print $user->getNomUrl(-1);
 					print '</td>';
 				}
 				if (!$i) {
