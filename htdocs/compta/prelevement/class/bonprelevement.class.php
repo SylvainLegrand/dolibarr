@@ -289,9 +289,6 @@ class BonPrelevement extends CommonObject
 	 * @var int
 	 */
 	public $fk_bank_account;
-	/**
-	 * @var int
-	 */
 	// END MODULEBUILDER PROPERTIES
 
 
