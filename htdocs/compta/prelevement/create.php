@@ -788,11 +788,13 @@ if ($resql) {
 		print '</td>';
 	}
 	// Ref
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if ($sourcetype != 'salary' && !empty($arrayfields['f.ref']['checked'])) {
 		// Cas facture/fournisseur : afficher input
 		print '<td class="liste_titre left">';
 		print '<input class="flat maxwidth50" type="text" name="search_ref" value="'.$search_ref.'">';
 		print '</td>';
+		// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	} elseif ($sourcetype == 'salary' && !empty($arrayfields['s.rowid']['checked'])) {
 		// Cas salaire : afficher input
 		print '<td class="liste_titre left">';
@@ -800,12 +802,14 @@ if ($resql) {
 		print '</td>';
 	}
 	// Ref suppllier
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if ($sourcetype != 'salary' && !empty($arrayfields['f.ref_supplier']['checked'])) {
 		print '<td class="liste_titre left">';
 		print '<input class="flat maxwidth50" type="text" name="search_ref_supplier" value="'.$search_ref_supplier.'">';
 		print '</td>';
 	}
 	// Date due
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if ($sourcetype != 'salary' && !empty($arrayfields['f.date_lim_reglement']['checked'])) {
 		print '<td class="liste_titre center">';
 		print '<div class="nowrap">';
@@ -816,10 +820,12 @@ if ($resql) {
 	}
 	// Thirpdarty
 	if ($sourcetype != 'salary') {
+		// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 		if (!empty($arrayfields['s.nom']['checked'])) {
 			print '<td class="liste_titre"><input class="flat maxwidth50" type="text" name="search_company" value="'.$search_company.'"></td>';
 		}
 	} else {
+		// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 		if (!empty($arrayfields['s.nom']['checked'])) {
 			print '<td class="liste_titre">';
 			print '<input class="flat maxwidth50" type="text" name="search_employee" value="'.$search_employee.'">';
@@ -827,29 +833,35 @@ if ($resql) {
 		}
 	}
 	// bank account
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if (!empty($arrayfields['f.fk_account']['checked'])) {
 		print '<td class="liste_titre"><input class="flat maxwidth50" type="text" name="search_account" value="'.$search_account.'"></td>';
 	}
 	// RIB
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if (!empty($arrayfields['pd.fk_soc_rib']['checked'])) {
 		print '<td class="liste_titre">&nbsp;</td>';
 	}
 	// Amount
 	if ($sourcetype != 'salary') {
+		// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 		if (!empty($arrayfields['pd.amount']['checked'])) {
 			print '<td class="liste_titre">&nbsp;</td>';
 		}
 	} else {
+		// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 		if (!empty($arrayfields['pd.amount']['checked'])) {
 			print '<td class="liste_titre"><input class="flat maxwidth50" type="text" name="search_amount" value="'.$search_amount.'"></td>';
 		}
 	}
 	// Date request
 	if ($sourcetype != 'salary') {
+		// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 		if (!empty($arrayfields['pd.date_demande']['checked'])) {
 			print '<td class="liste_titre">&nbsp;</td>';
 		}
 	} else {
+		// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 		if (!empty($arrayfields['pd.date_demande']['checked'])) {
 			print '<td class="liste_titre center">';
 			print '<div class="nowrap">';
@@ -873,22 +885,26 @@ if ($resql) {
 	}
 	$refKey   = ($sourcetype != 'salary') ? 'f.ref' : 's.rowid';
 	$rowidKey = ($sourcetype != 'salary') ? 'f.rowid' : 's.rowid';
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if (!empty($arrayfields[$refKey]['checked'])) {
 		$label = ($sourcetype != 'salary') ? $langs->trans($type == 'bank-transfer' ? "SupplierInvoice" : "Invoice") : $langs->trans("RefSalary");
 		print_liste_field_titre($label, $_SERVER['PHP_SELF'], $refKey.','.$rowidKey, '', $param, '', $sortfield, $sortorder);
 	}
 
 	// Ref supplier
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if (!empty($arrayfields['f.ref_supplier']['checked'])) {
 		if ($type == 'bank-transfer' && $sourcetype != 'salary') {
 			print_liste_field_titre($langs->trans("RefSupplier"), $_SERVER['PHP_SELF'], 'f.ref_supplier,f.rowid', '', $param, '', $sortfield, $sortorder);
 		}
 	}
 	// Due date
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if (!empty($arrayfields['f.date_lim_reglement']['checked'])) {
 		print_liste_field_titre($arrayfields['f.date_lim_reglement']['label'], $_SERVER['PHP_SELF'], 'f.date_lim_reglement', '', $param, '', $sortfield, $sortorder, 'center ');
 	}
 	// Thirdparty or user
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if (!empty($arrayfields['s.nom']['checked'])) {
 		if ($sourcetype != 'salary') {
 			print_liste_field_titre($langs->trans("ThirdParty"), $_SERVER['PHP_SELF'], 's.nom', '', $param, '', $sortfield, $sortorder);
@@ -897,10 +913,12 @@ if ($resql) {
 		}
 	}
 	// Bank account
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if (!empty($arrayfields['f.fk_account']['checked'])) {
 		print_liste_field_titre($arrayfields['f.fk_account']['label'], $_SERVER['PHP_SELF'], 'f.fk_account', '', $param, '', $sortfield, $sortorder);
 	}
 	// BAN
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if (!empty($arrayfields['pd.fk_soc_rib']['checked'])) {
 		if ($sourcetype != 'salary') {
 			print_liste_field_titre($langs->trans("SupplierIBAN"), '', '', '', $param, '', $sortfield, $sortorder);
@@ -912,6 +930,7 @@ if ($resql) {
 	if (empty($type) || $type == 'direc-debit') {
 		print '<td>'.$langs->trans("RUM").'</td>';
 	}
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if (!empty($arrayfields['pd.amount']['checked'])) {
 		if ($sourcetype == 'salary') {
 			print_liste_field_titre($langs->trans("Amount"), $_SERVER['PHP_SELF'], 'pd.amount', '', $param, '', $sortfield, $sortorder, 'center');
@@ -919,6 +938,7 @@ if ($resql) {
 			print_liste_field_titre($langs->trans("AmountTTC"), $_SERVER['PHP_SELF'], 'pd.amount', '', $param, '', $sortfield, $sortorder, 'center');
 		}
 	}
+	// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 	if (!empty($arrayfields['pd.date_demande']['checked'])) {
 		print_liste_field_titre($langs->trans("PendingSince"), $_SERVER['PHP_SELF'], 'pd.date_demande', '', $param, '', $sortfield, $sortorder, 'center');
 	}
@@ -987,6 +1007,7 @@ if ($resql) {
 			}
 			// Ref invoice
 			$refKey = ($sourcetype != 'salary') ? 'f.ref' : 's.rowid';
+			// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 			if (!empty($arrayfields[$refKey]['checked'])) {
 				print '<td class="tdoverflowmax150">';
 				if ($sourcetype != 'salary' || $salary === null) {
@@ -1000,6 +1021,7 @@ if ($resql) {
 				}
 			}
 			// Ref supplier
+			// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 			if (!empty($arrayfields['f.ref_supplier']['checked'])) {
 				if ($type == 'bank-transfer' && $sourcetype != 'salary') {
 					print '<td class="tdoverflowmax100" title="'.dol_escape_htmltag($invoicestatic->ref_supplier).'">';
@@ -1011,6 +1033,7 @@ if ($resql) {
 				}
 			}
 			// Date limit
+			// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 			if (!empty($arrayfields['f.date_lim_reglement']['checked'])) {
 				print '<td class="center nowraponall">'.dol_print_date($datelimit, 'day');
 				if ($invoicestatic->hasDelay()) {
@@ -1022,6 +1045,7 @@ if ($resql) {
 				}
 			}
 			// Thirdparty
+			// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 			if (!empty($arrayfields['s.nom']['checked'])) {
 				if ($sourcetype != 'salary') {
 					print '<td class="tdoverflowmax100">';
@@ -1039,6 +1063,7 @@ if ($resql) {
 				}
 			}
 			// Bank account
+			// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 			if (!empty($arrayfields['f.fk_account']['checked'])) {
 				if (!empty($obj->fk_account)) {
 					if (empty($bankaccountstatic)) {
@@ -1056,6 +1081,7 @@ if ($resql) {
 				}
 			}
 			// RIB
+			// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 			if (!empty($arrayfields['pd.fk_soc_rib']['checked'])) {
 				print '<td>';
 				if ($bac->id > 0) {
@@ -1102,6 +1128,7 @@ if ($resql) {
 				}
 			}
 			// Amount
+			// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 			if (!empty($arrayfields['pd.amount']['checked'])) {
 				print '<td class="center nowrap"><span id="amount_'.$obj->request_row_id.'" class="amount">'.price($obj->amount)."</span></td>\n";
 				if (!$i) {
@@ -1111,6 +1138,7 @@ if ($resql) {
 				$totalarray['val']['pd.amount'] += $obj->amount;
 			}
 			// Date
+			// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 			if (!empty($arrayfields['pd.date_demande']['checked'])) {
 				print '<td class="center nowrap">';
 				print dol_print_date($db->jdate($obj->date_demande), 'day');
