@@ -942,7 +942,7 @@ if ($resql) {
 		if (!isset($totalarray['val']['pd.amount'])) {
 			$totalarray['val']['pd.amount'] = 0;
 		}
-		$datelimit = isset($datelimit) ? $datelimit : null;
+		$datelimit = $datelimit ?? null;
 		if ($sourcetype != 'salary') {
 			require_once DOL_DOCUMENT_ROOT.'/societe/class/companybankaccount.class.php';
 		} else {
