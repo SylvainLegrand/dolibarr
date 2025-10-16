@@ -671,40 +671,40 @@ if ($resql) {
 		$param .= '&search_all='.urlencode($search_all);
 	}
 	if ($search_datelimit_startday) {
-		$param .= '&search_datelimit_startday='.urlencode($search_datelimit_startday);
+		$param .= '&search_datelimit_startday='.$search_datelimit_startday;
 	}
 	if ($search_datelimit_startmonth) {
-		$param .= '&search_datelimit_startmonth='.urlencode($search_datelimit_startmonth);
+		$param .= '&search_datelimit_startmonth='.$search_datelimit_startmonth;
 	}
 	if ($search_datelimit_startyear) {
-		$param .= '&search_datelimit_startyear='.urlencode($search_datelimit_startyear);
+		$param .= '&search_datelimit_startyear='.$search_datelimit_startyear;
 	}
 	if ($search_datelimit_endday) {
-		$param .= '&search_datelimit_endday='.urlencode($search_datelimit_endday);
+		$param .= '&search_datelimit_endday='.$search_datelimit_endday;
 	}
 	if ($search_datelimit_endmonth) {
-		$param .= '&search_datelimit_endmonth='.urlencode($search_datelimit_endmonth);
+		$param .= '&search_datelimit_endmonth='.$search_datelimit_endmonth;
 	}
 	if ($search_datelimit_endyear) {
-		$param .= '&search_datelimit_endyear='.urlencode($search_datelimit_endyear);
+		$param .= '&search_datelimit_endyear='.$search_datelimit_endyear;
 	}
 	if ($search_date_demande_startday) {
-		$param .= '&search_date_demande_startday='.urlencode($search_date_demande_startday);
+		$param .= '&search_date_demande_startday='.$search_date_demande_startday;
 	}
 	if ($search_date_demande_startmonth) {
-		$param .= '&search_date_demande_startmonth='.urlencode($search_date_demande_startmonth);
+		$param .= '&search_date_demande_startmonth='.$search_date_demande_startmonth;
 	}
 	if ($search_date_demande_startyear) {
-		$param .= '&search_date_demande_startyear='.urlencode($search_date_demande_startyear);
+		$param .= '&search_date_demande_startyear='.$search_date_demande_startyear;
 	}
 	if ($search_date_demande_endday) {
-		$param .= '&search_date_demande_endday='.urlencode($search_date_demande_endday);
+		$param .= '&search_date_demande_endday='.$search_date_demande_endday;
 	}
 	if ($search_date_demande_endmonth) {
-		$param .= '&search_date_demande_endmonth='.urlencode($search_date_demande_endmonth);
+		$param .= '&search_date_demande_endmonth='.$search_date_demande_endmonth;
 	}
 	if ($search_date_demande_endyear) {
-		$param .= '&search_date_demande_endyear='.urlencode($search_date_demande_endyear);
+		$param .= '&search_date_demande_endyear='.$search_date_demande_endyear;
 	}
 	if ($search_ref) {
 		$param .= '&search_ref='.urlencode($search_ref);
