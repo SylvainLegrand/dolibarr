@@ -1178,7 +1178,7 @@ if (!$error && ($massaction == 'delete' || ($action == 'delete' && $confirm == '
 						$isErasable = (int) (-5 . $objprelevement->fk_prelevement_bons);
 					}
 				}
-				if ($permissiontodelete && preg_match('/^-5(\d+)/', $isErasable, $reg)) {
+				if ($permissiontodelete && preg_match('/^-5(\d+)/', (string) $isErasable, $reg)) {
 					$langs->load("errors");
 					$nbignored++;
 					$TMsg[] = '<div class="error">'.$objecttmp->label.': '.$langs->trans('ErrorRecordHasChildren').'</div><br>';
