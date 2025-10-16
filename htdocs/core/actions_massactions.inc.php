@@ -1163,6 +1163,7 @@ if (!$error && ($massaction == 'delete' || ($action == 'delete' && $confirm == '
 				continue;
 			}
 
+			$isErasable = 0;
 			if ($objectclass == 'Salary') {
 				$sqlprelevement 	= "SELECT fk_prelevement_bons, traite";
 				$sqlprelevement 	.= " FROM ".$db->prefix(). "prelevement_demande";
