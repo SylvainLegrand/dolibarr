@@ -769,7 +769,7 @@ if ($resql) {
 	}
 
 	print '<div class="div-table-responsive-no-min">';
-print '<table class="noborder centpercent">';
+	print '<table class="noborder centpercent">';
 	print '<tr class="liste_titre">';
 	$varpage = empty($contextpage) ? $_SERVER["PHP_SELF"] : $contextpage;
 	$selectedfields = $form->multiSelectArrayWithCheckbox('selectedfields', $arrayfields, $varpage, getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN', ''));
