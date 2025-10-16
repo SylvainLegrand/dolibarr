@@ -1223,7 +1223,7 @@ if ($id > 0) {
 				$isErasable = (int) (-5 . $objprelevement->fk_prelevement_bons);
 			}
 		}
-		if ($permissiontodelete && preg_match('/^-5(\d+)/', $isErasable, $reg)) {
+		if ($permissiontodelete && preg_match('/^-5(\d+)/', (string) $isErasable, $reg)) {
 			$tmprefbon = '';
 			if ((int) $reg[1] > 0) {
 				require_once DOL_DOCUMENT_ROOT.'/compta/prelevement/class/bonprelevement.class.php';
