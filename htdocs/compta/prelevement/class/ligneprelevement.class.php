@@ -62,6 +62,11 @@ class LignePrelevement
 	public $bon_rowid;
 
 	/**
+	 * @var int ID of rib
+	 */
+	public $fk_rib;
+
+	/**
 	 * @var DoliDB Database handler.
 	 */
 	public $db;
@@ -107,7 +112,7 @@ class LignePrelevement
 		$error = 0;
 
 		$sql = "SELECT pl.rowid, pl.amount, p.ref, p.rowid as bon_rowid";
-		$sql .= ", pl.statut, pl.fk_soc";
+		$sql .= ", pl.statut, pl.fk_soc, pl.fk_rib";
 		$sql .= " FROM ".MAIN_DB_PREFIX."prelevement_lignes as pl";
 		$sql .= ", ".MAIN_DB_PREFIX."prelevement_bons as p";
 		$sql .= " WHERE pl.rowid=".((int) $rowid);
@@ -125,6 +130,7 @@ class LignePrelevement
 				$this->statut          = $obj->statut;
 				$this->bon_ref         = $obj->ref;
 				$this->bon_rowid       = $obj->bon_rowid;
+				$this->fk_rib          = $obj->fk_rib;
 			} else {
 				$error++;
 				dol_syslog("LignePrelevement::Fetch rowid=$rowid numrows=0");
