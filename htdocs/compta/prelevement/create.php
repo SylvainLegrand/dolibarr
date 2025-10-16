@@ -115,17 +115,17 @@ if ($sourcetype != 'salary') {
 	);
 
 	$arrayfields = array(
-		'f.ref'=>array('label'=>($type == 'bank-transfer' ? 'SupplierInvoice' : 'Invoice'), 'checked'=>1),
-		'f.date_lim_reglement'=>array('label'=>"DateDue", 'checked'=>1),
-		's.nom'=>array('label'=>"ThirdParty", 'checked'=>1),
-		'f.fk_account'=>array('label'=>"BankAccount", 'checked'=>1),
-		'pd.fk_soc_rib'=>array('label'=>"SupplierIBAN", 'checked'=>1),
-		'pd.amount'=>array('label'=>"AmountTTC", 'checked'=>1),
-		'pd.date_demande'=>array('label'=>"PendingSince", 'checked'=>1)
+		'f.ref'=>array('label'=>($type == 'bank-transfer' ? 'SupplierInvoice' : 'Invoice'), 'checked'=>'1'),
+		'f.date_lim_reglement'=>array('label'=>"DateDue", 'checked'=>'1'),
+		's.nom'=>array('label'=>"ThirdParty", 'checked'=>'1'),
+		'f.fk_account'=>array('label'=>"BankAccount", 'checked'=>'1'),
+		'pd.fk_soc_rib'=>array('label'=>"SupplierIBAN", 'checked'=>'1'),
+		'pd.amount'=>array('label'=>"AmountTTC", 'checked'=>'1'),
+		'pd.date_demande'=>array('label'=>"PendingSince", 'checked'=>'1')
 	);
 
 	if ($type == 'bank-transfer') {
-		$arrayfields['f.ref_supplier'] = array('label'=>'RefSupplier', 'checked'=>1);
+		$arrayfields['f.ref_supplier'] = array('label'=>'RefSupplier', 'checked'=>'1');
 	}
 } else {
 	if (!$sortfield) {
@@ -136,11 +136,11 @@ if ($sourcetype != 'salary') {
 		's.nom' => "Employee",
 	);
 	$arrayfields = array(
-		's.rowid'=>array('label'=>"RefSalary", 'checked'=>1),
-		's.nom'=>array('label'=>"Employee", 'checked'=>1),
-		'pd.fk_soc_rib'=>array('label'=>"SalaryIBAN", 'checked'=>1),
-		'pd.amount'=>array('label'=>"Amount", 'checked'=>1),
-		'pd.date_demande'=>array('label'=>"PendingSince", 'checked'=>1)
+		's.rowid'=>array('label'=>"RefSalary", 'checked'=>'1'),
+		's.nom'=>array('label'=>"Employee", 'checked'=>'1'),
+		'pd.fk_soc_rib'=>array('label'=>"SalaryIBAN", 'checked'=>'1'),
+		'pd.amount'=>array('label'=>"Amount", 'checked'=>'1'),
+		'pd.date_demande'=>array('label'=>"PendingSince", 'checked'=>'1')
 	);
 }
 
