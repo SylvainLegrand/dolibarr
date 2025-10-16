@@ -1072,16 +1072,16 @@ class BonPrelevement extends CommonObject
 	 *  - Link the order with the prelevement_demande lines
 	 *  TODO delete params banque and agence when not necessary
 	 *
-	 *	@param 	string	$banque				dolibarr mysoc bank
-	 *	@param	string	$agence				dolibarr mysoc bank office (guichet)
-	 *	@param	string	$mode				real=do action, simu=test only
-	 *  @param	string	$format				FRST, RCUR or ALL
-	 *  @param  int  	$executiondate		Date to execute the transfer
-	 *  @param	int	    $notrigger			Disable triggers
-	 *  @param	string	$type				'direct-debit' or 'bank-transfer'
-	 *  @param	int | Array $dids			ID(s) of existing payment request(s). If $did is defined, no entry. If $did is an array, the createdBonsPrelevement will include these payment requests.
-	 *  @param	int		$fk_bank_account	Bank account ID the receipt is generated for. Will use the ID into the setup of module Direct Debit or Credit Transfer if 0.
-	 *  @param	string	$sourcetype			'invoice' or 'salary'
+	 *	@param 	string	  $banque				dolibarr mysoc bank
+	 *	@param	string	  $agence				dolibarr mysoc bank office (guichet)
+	 *	@param	string	  $mode				real=do action, simu=test only
+	 *  @param	string	  $format				FRST, RCUR or ALL
+	 *  @param  int  	  $executiondate		Date to execute the transfer
+	 *  @param	int	      $notrigger			Disable triggers
+	 *  @param	string	  $type				'direct-debit' or 'bank-transfer'
+	 *  @param	int|int[] $dids			     ID(s) of existing payment request(s). If $did is an array, the createdBonsPrelevement will include these payment requests.
+	 *  @param	int		  $fk_bank_account	Bank account ID the receipt is generated for. Will use the ID into the setup of module Direct Debit or Credit Transfer if 0.
+	 *  @param	string	  $sourcetype			'invoice' or 'salary'
 	 *	@return	int							Return integer <0 if KO, No of invoice included into file if OK
 	 */
 	public function create($banque = '', $agence = '', $mode = 'real', $format = 'ALL', $executiondate = 0, $notrigger = 0, $type = 'direct-debit', $dids = [], $fk_bank_account = 0, $sourcetype = 'invoice')
@@ -1089,7 +1089,7 @@ class BonPrelevement extends CommonObject
 		// phpcs:enable
 		global $conf, $langs, $user;
 
-		dol_syslog(__METHOD__ . " Bank=".$banque." Office=".$agence." mode=".$mode." format=".$format." type=".$type." did=".$did." fk_bank_account=".$fk_bank_account." sourcetype=".$sourcetype, LOG_DEBUG);
+		dol_syslog(__METHOD__ . " Bank=".$banque." Office=".$agence." mode=".$mode." format=".$format." type=".$type." dids=".print_r($dids, true)." fk_bank_account=".$fk_bank_account." sourcetype=".$sourcetype, LOG_DEBUG);
 
 		require_once DOL_DOCUMENT_ROOT . "/compta/facture/class/facture.class.php";
 		require_once DOL_DOCUMENT_ROOT . "/societe/class/societe.class.php";
