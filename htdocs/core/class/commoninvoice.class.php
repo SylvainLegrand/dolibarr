@@ -768,7 +768,7 @@ abstract class CommonInvoice extends CommonObject
 	/**
 	 *	Return if an invoice has a prelevement demand
 	 *
-	 *	@return     int         < 0 found prelevement demand, 0=no, 1=yes
+	 *	@return		int					if prelevement demand found, 0=no demand, 1=yes
 	 */
 	public function hasPrelevementDemande()
 	{
