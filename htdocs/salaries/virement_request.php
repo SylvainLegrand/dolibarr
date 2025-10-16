@@ -535,7 +535,7 @@ if ($object->paye == 0 && $hadRequest == 0) {
 	if ($resteapayer > 0) {
 		if ($user_perms) {
 			$remaintopaylesspendingdebit = $resteapayer - $pending;
-			
+
 			print '<form method="POST" action="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'">';
 			print '<input type="hidden" name="token" value="'.newToken().'" />';
 			print '<input type="hidden" name="id" value="'.$object->id.'" />';
