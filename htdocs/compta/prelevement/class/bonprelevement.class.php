@@ -1205,7 +1205,7 @@ class BonPrelevement extends CommonObject
 				// Decode BAN
 				if ($sourcetype == 'salary') {
 					$bac = new UserBankAccount($this->db);
-					$bac->fetch((int)$factures[$i][15]);
+					$bac->fetch((int) $factures[$i][15]);
 					$factures[$i][10] = $bac->bic;
 					$factures[$i][11] = dolDecrypt($bac->iban);
 				} else {
