@@ -6736,7 +6736,17 @@ if ($action == 'create') {
 			// Delete
 			$isErasable = $object->is_erasable();
 			$htmltooltip = '';
-			if ($isErasable == -4) {
+			if (preg_match('/^-5(\d+)/', (string) $isErasable, $reg)) {
+				$tmprefbon = '';
+				if ((int) $reg[1] > 0) {
+					require_once DOL_DOCUMENT_ROOT.'/compta/prelevement/class/bonprelevement.class.php';
+					$tmpbon = new BonPrelevement($db);
+					$tmpbon->fetch((int) $reg[1]);
+					$tmprefbon = '('.$tmpbon->getNomUrl(0, 'nolink', 1).')';
+					$enableDelete = -1;
+				}
+				$htmltooltip = $langs->trans("DisabledBecauseInvoiceHasPrelevement", $tmprefbon);
+			} elseif ($isErasable == -4) {
 				$htmltooltip = $langs->trans('DisabledBecausePayments');
 			} elseif ($isErasable == -3) {
 				$htmltooltip = $langs->trans('DisabledBecauseNotLastSituationInvoice');
