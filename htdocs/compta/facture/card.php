@@ -6733,7 +6733,7 @@ if ($action == 'create') {
 			// Delete
 			$isErasable = $object->is_erasable();
 			$htmltooltip = '';
-			if (preg_match('/^-5(\d+)/', (string)$isErasable, $reg)) {
+			if (preg_match('/^-5(\d+)/', (string) $isErasable, $reg)) {
 				$tmprefbon = '';
 				if ((int) $reg[1] > 0) {
 					require_once DOL_DOCUMENT_ROOT.'/compta/prelevement/class/bonprelevement.class.php';
