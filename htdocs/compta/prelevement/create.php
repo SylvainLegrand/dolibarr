@@ -773,7 +773,7 @@ if ($resql) {
 	print '<table class="noborder centpercent">';
 	print '<tr class="liste_titre">';
 	$varpage = empty($contextpage) ? $_SERVER["PHP_SELF"] : $contextpage;
-	$selectedfields = $form->multiSelectArrayWithCheckbox('selectedfields', $arrayfields, $varpage, getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN', '')); // This also change content of $arrayfields
+	$selectedfields = $form->multiSelectArrayWithCheckbox('selectedfields', (array) $arrayfields, $varpage, getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN', '')); // This also change content of $arrayfields
 	$selectedfields .= $form->showCheckAddButtons('checkforselect', 1);
 
 	print '<table class="tagtable liste">';
@@ -929,6 +929,9 @@ if ($resql) {
 
 	if ($num) {
 		// Initialiser totalarray si pas déjà fait
+		if (!isset($totalarray)) {
+			$totalarray = array();
+		}
 		if (!isset($totalarray['nbfield'])) {
 			$totalarray['nbfield'] = 0;
 		}
@@ -941,6 +944,7 @@ if ($resql) {
 		if (!isset($totalarray['val']['pd.amount'])) {
 			$totalarray['val']['pd.amount'] = 0;
 		}
+		$datelimit = isset($datelimit) ? $datelimit : null;
 		if ($sourcetype != 'salary') {
 			require_once DOL_DOCUMENT_ROOT.'/societe/class/companybankaccount.class.php';
 		} else {
@@ -1037,6 +1041,9 @@ if ($resql) {
 			// Bank account
 			if (!empty($arrayfields['f.fk_account']['checked'])) {
 				if (!empty($obj->fk_account)) {
+					if (empty($bankaccountstatic)) {
+						$bankaccountstatic = new Account($db);
+					}
 					$bankaccountstatic->fetch($obj->fk_account);
 					print '<td class="tdoverflowmax200">'.$bankaccountstatic->getNomUrl(1, '', 'reflabel');
 					print '<input type="hidden" name="account_searched" value="'.$obj->fk_account.'">';
