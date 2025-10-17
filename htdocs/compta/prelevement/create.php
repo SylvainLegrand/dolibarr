@@ -457,7 +457,7 @@ if ($nb) {
 		// Display total amount of selected direct debit requests
 		print '<span class="hideonsmartphone">'.$langs->trans('Total').' </span>';
 		print '<input id="total_checked" value=0 disabled>';
-		
+
 		if ($mysoc->isInSEPA()) {
 			$title = $langs->trans("CreateForSepa");
 			if ($type == 'bank-transfer') {
