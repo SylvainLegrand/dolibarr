@@ -260,7 +260,7 @@ if (empty($reshook)) {
 			foreach ($toselect as $select) {
 				$selected_invoices[] = (int) $select;
 			}
-			$result = $bprev->create(getDolGlobalString('PRELEVEMENT_CODE_BANQUE'), getDolGlobalString('PRELEVEMENT_CODE_GUICHET'), $mode, $format, $executiondate, 0, $type, 0, 0, $sourcetype);
+			$result = $bprev->create(getDolGlobalString('PRELEVEMENT_CODE_BANQUE'), getDolGlobalString('PRELEVEMENT_CODE_GUICHET'), $mode, $format, $executiondate, 0, $type, $selected_invoices, 0, $sourcetype);
 			if ($result < 0) {
 				$mesg = '';
 
