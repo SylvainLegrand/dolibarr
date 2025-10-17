@@ -243,8 +243,14 @@ if (empty($reshook)) {
 				$action = '';
 				$error++;
 			}
+		} else {
+			if (empty($toselect)) {
+				$mesg = $langs->trans("NoSalarySelected");
+				setEventMessages($mesg, null, 'errors');
+				$action = '';
+				$error++;
+			}
 		}
-
 
 		$bprev = new BonPrelevement($db);
 
