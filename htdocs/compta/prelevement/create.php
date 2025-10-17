@@ -866,64 +866,75 @@ if ($resql) {
 	print "</tr>\n";
 
 	print '<tr class="liste_titre">';
-	// Ref invoice or salary
+	// Checkbox left column
 	if (getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN')) {
 		print_liste_field_titre($selectedfields, $_SERVER['PHP_SELF'], '', '', '', '', $sortfield, $sortorder, 'center maxwidthsearch ');
 	}
+
+	// Ref invoice or salary
 	$refKey   = ($sourcetype != 'salary') ? 'f.ref' : 's.rowid';
 	$rowidKey = ($sourcetype != 'salary') ? 'f.rowid' : 's.rowid';
 	if (!empty($arrayfields[$refKey]['checked'])) {
-		$label = ($sourcetype != 'salary') ? $langs->trans($type == 'bank-transfer' ? "SupplierInvoice" : "Invoice") : $langs->trans("RefSalary");
-		print_liste_field_titre($label, $_SERVER['PHP_SELF'], $refKey.','.$rowidKey, '', $param, '', $sortfield, $sortorder);
+		$key = ($sourcetype != 'salary') ? ($type == 'bank-transfer' ? "SupplierInvoice" : "Invoice") : "RefSalary";
+		print_liste_field_titre($key, $_SERVER['PHP_SELF'], $refKey.','.$rowidKey, '', $param, '', $sortfield, $sortorder);
 	}
 
 	// Ref supplier
 	if (!empty($arrayfields['f.ref_supplier']['checked'])) {
 		if ($type == 'bank-transfer' && $sourcetype != 'salary') {
-			print_liste_field_titre($langs->trans("RefSupplier"), $_SERVER['PHP_SELF'], 'f.ref_supplier,f.rowid', '', $param, '', $sortfield, $sortorder);
+			print_liste_field_titre("RefSupplier", $_SERVER['PHP_SELF'], 'f.ref_supplier,f.rowid', '', $param, '', $sortfield, $sortorder);
 		}
 	}
+
 	// Due date
 	if (!empty($arrayfields['f.date_lim_reglement']['checked'])) {
-		print_liste_field_titre($arrayfields['f.date_lim_reglement']['label'], $_SERVER['PHP_SELF'], 'f.date_lim_reglement', '', $param, '', $sortfield, $sortorder, 'center ');
+		print_liste_field_titre("DateDue", $_SERVER['PHP_SELF'], 'f.date_lim_reglement', '', $param, '', $sortfield, $sortorder, 'center');
 	}
+
 	// Thirdparty or user
 	if (!empty($arrayfields['s.nom']['checked'])) {
 		if ($sourcetype != 'salary') {
-			print_liste_field_titre($langs->trans("ThirdParty"), $_SERVER['PHP_SELF'], 's.nom', '', $param, '', $sortfield, $sortorder);
+			print_liste_field_titre("ThirdParty", $_SERVER['PHP_SELF'], 's.nom', '', $param, '', $sortfield, $sortorder);
 		} else {
-			print_liste_field_titre($langs->trans("Employee"), $_SERVER['PHP_SELF'], 'u.lastname', '', $param, '', $sortfield, $sortorder);
+			print_liste_field_titre("Employee", $_SERVER['PHP_SELF'], 'u.lastname', '', $param, '', $sortfield, $sortorder);
 		}
 	}
+
 	// Bank account
 	if (!empty($arrayfields['f.fk_account']['checked'])) {
-		print_liste_field_titre($arrayfields['f.fk_account']['label'], $_SERVER['PHP_SELF'], 'f.fk_account', '', $param, '', $sortfield, $sortorder);
+		print_liste_field_titre("BankAccount", $_SERVER['PHP_SELF'], 'f.fk_account', '', $param, '', $sortfield, $sortorder);
 	}
-	// BAN
+
+	// IBAN
 	if (!empty($arrayfields['pd.fk_soc_rib']['checked'])) {
 		if ($sourcetype != 'salary') {
-			print_liste_field_titre($langs->trans("SupplierIBAN"), '', '', '', $param, '', $sortfield, $sortorder);
+			print_liste_field_titre("SupplierIBAN", '', '', '', $param, '', $sortfield, $sortorder);
 		} else {
-			print_liste_field_titre($langs->trans("SalaryIBAN"), '', '', '', $param, '', $sortfield, $sortorder);
+			print_liste_field_titre("SalaryIBAN", '', '', '', $param, '', $sortfield, $sortorder);
 		}
 	}
+
 	// RUM
-	if (empty($type) || $type == 'direc-debit') {
-		print '<td>'.$langs->trans("RUM").'</td>';
+	if (empty($type) || $type == 'direct-debit') {
+		print_liste_field_titre("RUM", '', '', '', $param, '', $sortfield, $sortorder);
 	}
+
+	// Amount
 	if (!empty($arrayfields['pd.amount']['checked'])) {
-		if ($sourcetype == 'salary') {
-			print_liste_field_titre($langs->trans("Amount"), $_SERVER['PHP_SELF'], 'pd.amount', '', $param, '', $sortfield, $sortorder, 'center');
-		} else {
-			print_liste_field_titre($langs->trans("AmountTTC"), $_SERVER['PHP_SELF'], 'pd.amount', '', $param, '', $sortfield, $sortorder, 'center');
-		}
+		$amountKey = ($sourcetype == 'salary') ? "Amount" : "AmountTTC";
+		print_liste_field_titre($amountKey, $_SERVER['PHP_SELF'], 'pd.amount', '', $param, '', $sortfield, $sortorder, 'center');
 	}
+
+	// Pending since
 	if (!empty($arrayfields['pd.date_demande']['checked'])) {
-		print_liste_field_titre($langs->trans("PendingSince"), $_SERVER['PHP_SELF'], 'pd.date_demande', '', $param, '', $sortfield, $sortorder, 'center');
+		print_liste_field_titre("PendingSince", $_SERVER['PHP_SELF'], 'pd.date_demande', '', $param, '', $sortfield, $sortorder, 'center');
 	}
+
 	if (!getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN')) {
 		print_liste_field_titre($selectedfields, $_SERVER['PHP_SELF'], '', '', '', '', $sortfield, $sortorder, 'center maxwidthsearch ');
 	}
+
+	print '</tr>';
 	print '</tr>';
 
 	if ($num) {
