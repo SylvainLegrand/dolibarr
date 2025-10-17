@@ -503,7 +503,11 @@ if ($nb) {
 		$titlefortab = $langs->transnoentitiesnoconv("PaymentByBankTransfers");
 		$title = $langs->trans("CreateFileForPaymentByBankTransfer");
 	}
-	print '<a class="butActionRefused classfortooltip margintoponly marginbottomonly" href="#" title="'.dol_escape_htmltag($langs->transnoentitiesnoconv("NoInvoiceToWithdraw", $titlefortab, $titlefortab)).'">';
+	if ($sourcetype != 'salary') {
+		print '<a class="butActionRefused classfortooltip margintoponly marginbottomonly" href="#" title="'.dol_escape_htmltag($langs->transnoentitiesnoconv("NoInvoiceToWithdraw", $titlefortab, $titlefortab)).'">';
+	} else {
+		print '<a class="butActionRefused classfortooltip margintoponly marginbottomonly" href="#" title="'.dol_escape_htmltag($langs->transnoentitiesnoconv("NoSalaryToWithdraw", $titlefortab, $titlefortab)).'">';
+	}
 	print $title;
 	print "</a>\n";
 }
