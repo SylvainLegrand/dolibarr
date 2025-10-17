@@ -4273,7 +4273,7 @@ if ($action == 'create') {
 							$enableDelete = -1;
 						}
 						$htmltooltip = $langs->trans("DisabledBecauseInvoiceHasPrelevement", $tmprefbon);
-					}  elseif ($isErasable == -4) {
+					} elseif ($isErasable == -4) {
 						$htmltooltip = $langs->trans("DisabledBecausePayments");
 					} elseif ($isErasable == -3) {	// Should never happen with supplier invoice
 						$htmltooltip = $langs->trans("DisabledBecauseNotLastSituationInvoice");
