@@ -1163,6 +1163,46 @@ if (!$error && ($massaction == 'delete' || ($action == 'delete' && $confirm == '
 				continue;
 			}
 
+			// Handle specific case when the object is a Salary
+			if ($objectclass === 'Salary') {
+			    // Build SQL query to check if a direct debit request already exists for this salary
+			    $sqlprelevement  = 'SELECT fk_prelevement_bons, traite';
+			    $sqlprelevement .= ' FROM ' . $db->prefix() . 'prelevement_demande';
+			    $sqlprelevement .= ' WHERE fk_salary = ' . ((int) $objecttmp->id);
+			
+			    $resqlprelevement = $db->query($sqlprelevement);
+			
+			    if ($resqlprelevement) {
+			        $objprelevement = $db->fetch_object($resqlprelevement);
+			        if ($objprelevement) {
+			            $fk_prelevement_bons = (int) $objprelevement->fk_prelevement_bons;
+			            $traite = (int) $objprelevement->traite;
+			
+			            // If the request has not been processed yet, allow deletion
+			            if ($traite === 0) {
+			                $isErasable = 1;
+			            } else {
+			                // If a processed direct debit request exists, mark it as non-deletable
+			                // The negative value (-5XXX) indicates that a direct debit file is already linked
+			                $isErasable = (int) ('-5' . $fk_prelevement_bons);
+			            }
+			        }
+			    }
+			
+			    // Prevent deletion if a direct debit request is already linked to this salary
+			    if (!empty($permissiontodelete) && isset($isErasable) && preg_match('/^-5(\d+)/', (string) $isErasable, $reg) === 1) {
+			        $langs->load('errors');
+			        $nbignored++;
+			
+			        // Safely get the label or ID for displaying the error message
+			        $label = property_exists($objecttmp, 'label') ? $objecttmp->label : $objecttmp->id;
+			
+			        // Display error message and skip the current record
+			        $TMsg[] = '<div class="error">' . dol_escape_htmltag($label) . ': ' . $langs->trans('ErrorRecordHasChildren') . '</div><br>';
+			        continue;
+			    }
+			}
+			
 			if ($objectclass == 'Holiday' && ! in_array($objecttmp->statut, array(Holiday::STATUS_DRAFT, Holiday::STATUS_CANCELED, Holiday::STATUS_REFUSED))) {
 				$langs->load("errors");
 				$nbignored++;
