@@ -1164,6 +1164,7 @@ if (!$error && ($massaction == 'delete' || ($action == 'delete' && $confirm == '
 			}
 
 			// Handle specific case when the object is a Salary
+			$isErasable = 0;
 			if ($objectclass === 'Salary') {
 				// Build SQL query to check if a direct debit request already exists for this salary
 				$sqlprelevement  = 'SELECT fk_prelevement_bons, traite';
@@ -1190,7 +1191,7 @@ if (!$error && ($massaction == 'delete' || ($action == 'delete' && $confirm == '
 				}
 
 				// Prevent deletion if a direct debit request is already linked to this salary
-				if (!empty($permissiontodelete) && isset($isErasable) && preg_match('/^-5(\d+)/', (string) $isErasable, $reg) === 1) {
+				if (preg_match('/^-5(\d+)/', (string) $isErasable, $reg) === 1) {
 					$langs->load('errors');
 					$nbignored++;
 
