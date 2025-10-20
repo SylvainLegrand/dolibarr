@@ -255,6 +255,48 @@ if ($massaction == 'withdrawrequest') {
 				if ($result > 0) {
 					$db->commit();
 					$nbwithdrawrequestok++;
+					$pending = 0;
+				// Get pending requests open with no transfer receipt yet
+				$sql = "SELECT SUM(pfd.amount) as amount";
+				$sql .= " FROM ".MAIN_DB_PREFIX."prelevement_demande as pfd";
+				$sql .= " WHERE pfd.fk_salary = ".((int) $salary->id);
+				$sql .= " AND pfd.traite = 0";
+				$resql = $db->query($sql);
+				if ($resql) {
+					$obj = $db->fetch_object($resql);
+					if ($obj) {
+						$pending += (float) $obj->amount;
+					}
+				} else {
+					dol_print_error($db);
+				}
+				// Get pending request with a transfer receipt generated but not yet processed
+				$sqlPending = "SELECT SUM(pl.amount) as amount";
+				$sqlPending .= " FROM ".$db->prefix()."prelevement_lignes as pl";
+				$sqlPending .= " INNER JOIN ".$db->prefix()."prelevement as p ON p.fk_prelevement_lignes = pl.rowid";
+				$sqlPending .= " WHERE p.fk_salary = ".((int) $salary->id);
+				$sqlPending .= " AND (pl.statut IS NULL OR pl.statut = 0)";
+				$resPending = $db->query($sqlPending);
+				if ($resPending) {
+					if ($objPending = $db->fetch_object($resPending)) {
+						$pending += (float) $objPending->amount;
+					}
+				}
+				$db->free($resPending);
+
+				$requestAmount = $salary->resteapayer - $pending;
+				if ($requestAmount > 0) {
+					$db->begin();
+					$result = $salary->demande_prelevement($user, $requestAmount, 'salaire');
+					if ($result > 0) {
+						$db->commit();
+						$nbwithdrawrequestok++;
+					} else {
+						$db->rollback();
+						$salary->errors[] = 'WithdrawRequestErrorNilAmount';
+						$salary->errors[] = 'WithdrawRequestErrorAlreadyTransmitted';
+						setEventMessages($salary->error, $salary->errors, 'errors');
+					}
 				} else {
 					$db->rollback();
 					setEventMessages($salary->error, $salary->errors, 'errors');
@@ -841,7 +883,7 @@ while ($i < $imaxinloop) {
 	} else {
 		// Show here line of result
 		$j = 0;
-		print '<tr data-rowid="'.$object->id.'" class="oddeven row-with-select">';
+		print '<tr data-rowid="'.$object->id.'" class="oddeven">'; // removing 'row-with-select' hides mass actions
 		// Action column
 		if (getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN')) {
 			print '<td class="nowrap center">';
