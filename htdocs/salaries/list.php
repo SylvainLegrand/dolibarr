@@ -250,12 +250,7 @@ if ($massaction == 'withdrawrequest') {
 		if (!$error && !empty($listofSalries)) {
 			$nbwithdrawrequestok = 0;
 			foreach ($listofSalries as $salary) {
-				$db->begin();
-				$result = $salary->demande_prelevement($user, (float) $salary->resteapayer, 'salaire');
-				if ($result > 0) {
-					$db->commit();
-					$nbwithdrawrequestok++;
-					$pending = 0;
+				$pending = 0;
 				// Get pending requests open with no transfer receipt yet
 				$sql = "SELECT SUM(pfd.amount) as amount";
 				$sql .= " FROM ".MAIN_DB_PREFIX."prelevement_demande as pfd";
@@ -293,13 +288,12 @@ if ($massaction == 'withdrawrequest') {
 						$nbwithdrawrequestok++;
 					} else {
 						$db->rollback();
-						$salary->errors[] = 'WithdrawRequestErrorNilAmount';
-						$salary->errors[] = 'WithdrawRequestErrorAlreadyTransmitted';
 						setEventMessages($salary->error, $salary->errors, 'errors');
 					}
 				} else {
-					$db->rollback();
-					setEventMessages($salary->error, $salary->errors, 'errors');
+					$salary->errors[] = 'WithdrawRequestErrorNilAmount';
+					$salary->errors[] = 'WithdrawRequestErrorAlreadyTransmitted';
+					setEventMessages($salary->label.': ', $salary->errors, 'errors');
 				}
 			}
 			if ($nbwithdrawrequestok > 0) {
